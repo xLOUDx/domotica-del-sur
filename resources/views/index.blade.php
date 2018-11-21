@@ -17,6 +17,7 @@
 
   <!-- Bootstrap CSS File -->
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
 
   <!-- Libraries CSS Files -->
   <link href="lib/nivo-slider/css/nivo-slider.css" rel="stylesheet">

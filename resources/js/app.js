@@ -19,6 +19,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('index-shop', require('./components/Shop/IndexShopComponent.vue'));
+Vue.component('item-shop', require('./components/Shop/ItemShopComponent.vue'));
+
 
 
 // const files = require.context('./', true, /\.vue$/i)
