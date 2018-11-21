@@ -4,8 +4,8 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/blog', function () {
-    return view('blog');
+Route::get('/tienda', function () {
+    return view('tienda');
 });
 
 Route::get('/blog-details', function () {
@@ -13,5 +13,9 @@ Route::get('/blog-details', function () {
 });
 
 Route::get('/prueba', 'WebPayController@index');
-Route::get('/pay', 'WebPayController@pay');
+Route::get('/redirect', 'WebPayController@redirect');
+Route::post('/response', 'WebPayController@response');
+Route::post('/finish', 'WebPayController@finish');
+
+
 

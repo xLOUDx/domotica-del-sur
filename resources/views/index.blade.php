@@ -908,13 +908,7 @@
               </div>
             </div>
           </div>
-          <!-- end single footer -->
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="footer-content">
-              <div class="footer-head">
-              </div>
-            </div>
-          </div>
+
           <!-- end single footer -->
           <div class="col-md-4 col-sm-4 col-xs-12">
           </div>
@@ -922,6 +916,8 @@
       </div>
     </div>
     <div class="footer-area-bottom">
+      <div class="container">
+      </div>
     </div>
   </footer>
 

@@ -10,7 +10,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hola</h1>
     <div class="container" id="app">
         <example-component> </example-component>
     </div>

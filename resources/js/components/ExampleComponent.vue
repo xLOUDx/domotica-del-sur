@@ -18,12 +18,11 @@
     export default {
         data(){
             return{
-                html: ''
             }
         },
         methods:{
             Pay(){
-                axios.get('/pay')
+                window.location.href = '/redirect';
             }
         }
     }
