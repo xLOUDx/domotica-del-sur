@@ -1,10 +1,10 @@
 <template>
-    <div class="container-fluid d-flex h-100" >
+    <div class="container-fluid">
 
-        <div class="row h-100 d-flex justify-content-center" >
+        <div class="row h-100" >
 
         <!-- Sidebar Category start -->
-        <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 shadow p-3 mb-5 bg-white rounded" align="center" style="text-align:center;">
+        <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 bg-white rounded" align="center" style="text-align:center;">
            
 
             <div class="list-group col-xs-12 col-md-12 col-lg-12 col-xl-12">
@@ -28,20 +28,14 @@
         <!-- Shop items start -->
         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    <item-shop> </item-shop>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    <item-shop> </item-shop>
-                </div> 
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    <item-shop> </item-shop>
-                </div>
+                <!--<div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                    <item-shop :prod="prod"> </item-shop> 
+                </div>-->
+                        <new-item> </new-item>
             </div>
         </div>
 
         </div>
-
 </div>
 </template>
 <script>
@@ -58,6 +52,8 @@ export default {
         axios.get('/items')
             .then((response) => {
                 this.data = response.data;
+                console.log(response.data);
+                
             })
             .catch((error) => console.log(error))
             

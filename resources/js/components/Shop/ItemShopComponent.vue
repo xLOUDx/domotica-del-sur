@@ -7,7 +7,7 @@
           <a @click="ShowDetail">
             <div class="img"> <img class="img" :src="this.image" alt=""> </div>
 				    <div class="info">
-					    <h2>Modelo</h2>
+					    <h2>{{ this.prod.model }}</h2>
 					    <p>Lorem ipsum, dolor sit amet consectetur rr</p> <!-- 42 Characters -->
 				    </div>
           </a>
@@ -29,7 +29,6 @@ export default {
 	data(){
 		return{
       image: 'img/about/1.jpg',
-      id: 2
     }    
 	},
       methods:{

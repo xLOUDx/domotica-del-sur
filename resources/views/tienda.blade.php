@@ -70,7 +70,7 @@
   <!-- END Header -->
 
   <!-- Vuejs Are -->
-  <div class="container-fluid" style="padding-top:20px;background-color:red" id="app">
+  <div class="container-fluid" style="padding-top:20px;" id="app">
       <router-view> </router-view>
   </div>
 

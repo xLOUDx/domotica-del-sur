@@ -38,7 +38,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*$item = new Product;
+
+        $item->model = $request->model;
+        $item->description = $request->description;
+        $item->stock= $request->stock;
+        $item->internal_code = $request->internal_code;
+        $item->type  = $request->type;
+
+        $item->save();*/
+        print_r($request);
+
     }
 
     /**
