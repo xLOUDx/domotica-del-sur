@@ -47621,37 +47621,30 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "col-sm-12 col-md-9 col-lg-10 col-xl-10",
-          staticStyle: { "-color": "blue" }
-        },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-sm-12 col-md-6 col-lg-4 col-xl-4" },
-              [_c("item-shop")],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-12 col-md-6 col-lg-4 col-xl-4" },
-              [_c("item-shop")],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-12 col-md-6 col-lg-4 col-xl-4" },
-              [_c("item-shop")],
-              1
-            )
-          ])
-        ]
-      )
+      _c("div", { staticClass: "col-sm-12 col-md-9 col-lg-10 col-xl-10" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-sm-12 col-md-6 col-lg-4 col-xl-4" },
+            [_c("item-shop")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-sm-12 col-md-6 col-lg-4 col-xl-4" },
+            [_c("item-shop")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-sm-12 col-md-6 col-lg-4 col-xl-4" },
+            [_c("item-shop")],
+            1
+          )
+        ])
+      ])
     ])
   ])
 }
@@ -47776,8 +47769,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            type: 'Carrito'
+            type: 'Carrito',
+            data: {}
         };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/items').then(function (response) {
+            _this.data = response.data;
+        }).catch(function (error) {
+            return console.log(error);
+        });
     },
 
     methods: {}
@@ -47818,7 +47821,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48170,6 +48173,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['prod'],
   data: function data() {
     return {
       image: 'img/about/1.jpg',

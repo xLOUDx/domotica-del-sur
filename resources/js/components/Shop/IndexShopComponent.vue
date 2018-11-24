@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid d-flex h-100">
+    <div class="container-fluid d-flex h-100" >
 
         <div class="row h-100 d-flex justify-content-center" >
 
@@ -26,7 +26,7 @@
         <!-- Sidebar Category end -->
 
         <!-- Shop items start -->
-        <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10" style="-color:blue">
+        <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                     <item-shop> </item-shop>
@@ -48,11 +48,22 @@
 export default {
     data(){
         return{
-            type: 'Carrito'
+            type: 'Carrito',
+            data: {
+
+            }
         }
     },
+    created(){
+        axios.get('/items')
+            .then((response) => {
+                this.data = response.data;
+            })
+            .catch((error) => console.log(error))
+            
+    },
     methods:{
-    
+        
     }
 }
 

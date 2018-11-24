@@ -25,6 +25,7 @@
 </template>
 <script>
 export default {
+  props:['prod'],
 	data(){
 		return{
       image: 'img/about/1.jpg',

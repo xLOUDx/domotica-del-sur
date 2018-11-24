@@ -13,6 +13,7 @@ Route::get('/redirect', 'WebPayController@redirect');
 Route::post('/response', 'WebPayController@response');
 Route::post('/finish', 'WebPayController@finish');
 
+Route::resource('/items', 'ProductController');
 
 
 
