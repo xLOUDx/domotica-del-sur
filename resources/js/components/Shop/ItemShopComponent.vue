@@ -1,25 +1,42 @@
 <template>
-	<div>
+  <div class="container">
 		<div class="cardContainer inactive">
 			 <div class="card">
 				<div class="side front">
-				<div class="img"> <img class="img" :src="this.image" alt=""> </div>
-				<div class="info">
-					<h2>Modelo</h2>
-					<p>Descripción breve</p>
-				</div>
+
+          <a @click="ShowDetail">
+            <div class="img"> <img class="img" :src="this.image" alt=""> </div>
+				    <div class="info">
+					    <h2>Modelo</h2>
+					    <p>Lorem ipsum, dolor sit amet consectetur rr</p> <!-- 42 Characters -->
+				    </div>
+          </a>
+
+          <div class="card-footer text-muted">
+            <button class="btn btn-primary" style="width:100%"> 
+              <p class="h4 text-white">Agregar al carrito</p> 
+            </button>
+          </div>
+
 				</div>
 			</div>
 		</div>
-	</div>
+</div>
 </template>
 <script>
 export default {
 	data(){
 		return{
-			image: 'http://i.imgur.com/1aE1nMA.jpg'
-		}
-	}
+      image: 'img/about/1.jpg',
+      id: 2
+    }    
+	},
+      methods:{
+        ShowDetail(){
+          //console.log('Hola')
+          this.$router.push({ name: 'ItemDetail', params: { id: this.id }});
+        }
+      }
 }
 </script>
 <style lang="sass" scoped>
