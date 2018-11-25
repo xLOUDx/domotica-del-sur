@@ -8,9 +8,9 @@
            
 
             <div class="list-group col-xs-12 col-md-12 col-lg-12 col-xl-12">
-                <a href="/" class="list-group-item" style="background-color:#C3E1F1;">Inicio</a>
-            </div> <br> <br> <br>
-        <h3>Categorias</h3> 
+                <a href="/" class="list-group-item h5" style="background-color:#C3E1F1;">Inicio</a>
+            </div> <br> <br>
+        <h3> <strong> Categorias </strong> </h3> 
             <div class="list-group col-xs-12 col-md-12 col-lg-12 col-xl-12">
                 <a href="#" class="list-group-item active"> <span>Todas</span></a>
                 <a href="#" class="list-group-item"> <span>Domo</span></a>
@@ -28,14 +28,15 @@
         <!-- Shop items start -->
         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
-                <!--<div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    <item-shop :prod="prod"> </item-shop> 
-                </div>-->
-                        <new-item> </new-item>
+                <div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                    <item-shop v-show="false" :prod="prod"> </item-shop> 
+                </div>
+                                <new-item v-show="true"> </new-item>
             </div>
         </div>
 
         </div>
+
 </div>
 </template>
 <script>
@@ -52,8 +53,7 @@ export default {
         axios.get('/items')
             .then((response) => {
                 this.data = response.data;
-                console.log(response.data);
-                
+                console.log(response.data);  
             })
             .catch((error) => console.log(error))
             

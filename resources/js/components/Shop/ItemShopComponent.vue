@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
 		<div class="cardContainer inactive">
 			 <div class="card">
 				<div class="side front">
@@ -7,14 +7,14 @@
           <a @click="ShowDetail">
             <div class="img"> <img class="img" :src="this.image" alt=""> </div>
 				    <div class="info">
-					    <h2>{{ this.prod.model }}</h2>
-					    <p>Lorem ipsum, dolor sit amet consectetur rr</p> <!-- 42 Characters -->
+					    <h3>{{ this.prod.model }}</h3>
+					    <p>{{ this.prod.description }}</p> <!-- 42 Characters -->
 				    </div>
           </a>
 
-          <div class="card-footer text-muted">
+          <div class="card-footer text-muted" style="background-color:#EEEEEE">
             <button class="btn btn-primary" style="width:100%"> 
-              <p class="h4 text-white">Agregar al carrito</p> 
+              <p class="text-white">Agregar al carrito</p> 
             </button>
           </div>
 
@@ -29,6 +29,7 @@ export default {
 	data(){
 		return{
       image: 'img/about/1.jpg',
+      id: 2
     }    
 	},
       methods:{

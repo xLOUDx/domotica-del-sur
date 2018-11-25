@@ -1,7 +1,7 @@
 <template>
 <div class="container-fluid" style="padding:2%">
-    <a href="/tienda" class="btn btn-primary btn-lg"> 
-        <p class="h4"> Volver a inicio </p> 
+    <a href="/tienda" class="btn btn-primary"> 
+        <strong> Volver a inicio </strong> 
     </a> <br> <br>
 
     <div class="card">
@@ -60,24 +60,24 @@
                 <div class="col-sm-5 col-md-8 col-lg-12">
                     <dt>Cantidad</dt>
                         <div class="dropdown">
-                            <button class="btn btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Seleccione
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item btn-lg" href="#">1</a>
-                            <a class="dropdown-item btn-lg" href="#">2</a>
-                            <a class="dropdown-item btn-lg" href="#">3</a>
-                            <a class="dropdown-item btn-lg" href="#">4</a>
-                            <a class="dropdown-item btn-lg" href="#">5</a>
+                            <a class="dropdown-item" href="#">1</a>
+                            <a class="dropdown-item" href="#">2</a>
+                            <a class="dropdown-item" href="#">3</a>
+                            <a class="dropdown-item" href="#">4</a>
+                            <a class="dropdown-item" href="#">5</a>
                         </div>
                         </div>
                 </div> <!-- col.// -->
             </div> <!-- row.// -->
             <hr>
-            <a class="btn btn-lg btn-primary text-uppercase text-white"> 
+            <a class="btn btn-primary text-uppercase text-white"> 
                 <cart-shop :type="type"> </cart-shop> 
             </a>
-            <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>Agregar al carrito</a>
+            <a href="#" class="btn btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>Agregar al carrito</a>
         </article> <!-- card-body.// -->
         </aside> <!-- col.// -->
         </div> <!-- row.// -->

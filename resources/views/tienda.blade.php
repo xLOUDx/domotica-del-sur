@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
 
   <!-- Bootstrap CSS File -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 

@@ -17,9 +17,14 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('model');
             $table->text('description');
+            $table->string('data_sheet');
             $table->integer('stock');
             $table->string('internal_code');
             $table->string('type');
+            $table->string('img1');
+            $table->string('img2');
+            $table->string('img3');
+            $table->string('img4');
             $table->timestamps();
         });
     }
