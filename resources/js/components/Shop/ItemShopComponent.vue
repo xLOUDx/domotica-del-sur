@@ -29,13 +29,12 @@ export default {
 	data(){
 		return{
       image: 'img/about/1.jpg',
-      id: 2
     }    
 	},
       methods:{
         ShowDetail(){
           //console.log('Hola')
-          this.$router.push({ name: 'ItemDetail', params: { id: this.id }});
+          this.$router.push({ name: 'ItemDetail', params: { id: this.$props.prod.id }});
         }
       }
 }

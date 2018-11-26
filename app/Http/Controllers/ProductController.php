@@ -43,7 +43,7 @@ class ProductController extends Controller
         /* ¡¡FIX THIS CODE!!*/
         /* Get, transform and save the image */
             /*ONE*/
-            $exploded1 = explode(',', $request->images->img1);
+            $exploded1 = explode(',', $request->img1);
             $decoded1 = base64_decode($exploded1[1]);
             
             if(str_contains($exploded1[0], 'jpeg')){ /* ATENTION TO THIS LINE! */
@@ -52,13 +52,13 @@ class ProductController extends Controller
                 $extension1 = 'png';
             }
     
-            $filename1 = $request->item->model.'_img1'.'.'.$extension1;
+            $filename1 = $request->model.'_img1'.'.'.$extension1;
             $path1 = public_path('items_img').'/'.$filename1;
             file_put_contents($path1, $decoded1); 
             /*ONE*/
 
             /*TWO*/
-            $exploded2 = explode(',', $request->images->img2);
+            $exploded2 = explode(',', $request->img2);
             $decoded2 = base64_decode($exploded2[1]);
             
             if(str_contains($exploded2[0], 'jpeg')){ /* ATENTION TO THIS LINE! */
@@ -67,13 +67,13 @@ class ProductController extends Controller
                 $extension2 = 'png';
             }
     
-            $filename2 = $request->item->model.'_img2'.'.'.$extension2;
+            $filename2 = $request->model.'_img2'.'.'.$extension2;
             $path2 = public_path('items_img').'/'.$filename2;
             file_put_contents($path2, $decoded2); 
             /*TWO*/
 
             /*THREE*/
-            $exploded3 = explode(',', $request->images->img3);
+            $exploded3 = explode(',', $request->img3);
             $decoded3 = base64_decode($exploded3[1]);
             
             if(str_contains($exploded3[0], 'jpeg')){ /* ATENTION TO THIS LINE! */
@@ -82,13 +82,13 @@ class ProductController extends Controller
                 $extension3 = 'png';
             }
     
-            $filename3 = $request->item->model.'_img3'.'.'.$extension3;
+            $filename3 = $request->model.'_img3'.'.'.$extension3;
             $path3 = public_path('items_img').'/'.$filename3;
             file_put_contents($path3, $decoded3); 
             /*THREE*/
 
             /*FOUR*/
-            $exploded4 = explode(',', $request->images->img4);
+            $exploded4 = explode(',', $request->img4);
             $decoded4 = base64_decode($exploded4[1]);
             
             if(str_contains($exploded4[0], 'jpeg')){ /* ATENTION TO THIS LINE! */
@@ -97,7 +97,7 @@ class ProductController extends Controller
                 $extension4 = 'png';
             }
     
-            $filename4 = $request->item->model.'_img4'.'.'.$extension4;
+            $filename4 = $request->model.'_img4'.'.'.$extension4;
             $path4 = public_path('items_img').'/'.$filename4;
             file_put_contents($path4, $decoded4); 
             /*FOUR*/
@@ -128,7 +128,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+       return $product;
     }
 
     /**

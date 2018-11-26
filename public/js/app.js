@@ -50577,15 +50577,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: ['prod'],
   data: function data() {
     return {
-      image: 'img/about/1.jpg',
-      id: 2
+      image: 'img/about/1.jpg'
     };
   },
 
   methods: {
     ShowDetail: function ShowDetail() {
       //console.log('Hola')
-      this.$router.push({ name: 'ItemDetail', params: { id: this.id } });
+      this.$router.push({ name: 'ItemDetail', params: { id: this.$props.prod.id } });
     }
   }
 });
@@ -51164,6 +51163,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
     data: function data() {
         return {
             type: 'Comprar',
@@ -51178,6 +51178,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         this.currentImg = this.img.img1;
+
+        axios.get('items/' + this.$props.id).then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
     },
 
     methods: {
@@ -51558,7 +51564,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51632,9 +51638,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data_sheet: '',
                 stock: '',
                 internal_code: '',
-                type: ''
-            },
-            images: {
+                type: '',
                 img1: '',
                 img2: '',
                 img3: '',
@@ -51657,7 +51661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         Create: function Create() {
-            axios.post('items', { item: this.item, images: this.images }).then(function (response) {
+            axios.post('items', this.item).then(function (response) {
                 //console.log('Correcto');
 
                 console.log(response.data);
@@ -51672,28 +51676,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0]);
                 fileReader.onload = function (event) {
-                    _this2.images.img1 = event.target.result;
+                    _this2.item.img1 = event.target.result;
                 };
             }
             if (img == 2) {
                 var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0]);
                 fileReader.onload = function (event) {
-                    _this2.images.img2 = event.target.result;
+                    _this2.item.img2 = event.target.result;
                 };
             }
             if (img == 3) {
                 var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0]);
                 fileReader.onload = function (event) {
-                    _this2.images.img3 = event.target.result;
+                    _this2.item.img3 = event.target.result;
                 };
             }
             if (img == 4) {
                 var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0]);
                 fileReader.onload = function (event) {
-                    _this2.images.img4 = event.target.result;
+                    _this2.item.img4 = event.target.result;
                 };
             }
         }
@@ -52184,8 +52188,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: false,
-                        expression: "false"
+                        value: true,
+                        expression: "true"
                       }
                     ],
                     attrs: { prod: prod }
@@ -52200,8 +52204,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: true,
-                  expression: "true"
+                  value: false,
+                  expression: "false"
                 }
               ]
             })

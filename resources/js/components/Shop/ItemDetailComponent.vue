@@ -89,6 +89,7 @@
 
 <script>
 export default {
+    props: ['id'],
     data(){
         return{
             type: 'Comprar',
@@ -103,6 +104,14 @@ export default {
     },
     created(){
         this.currentImg = this.img.img1;
+
+        axios.get('items/' + this.$props.id)
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     },
     methods:{
         ChangePic(pic){

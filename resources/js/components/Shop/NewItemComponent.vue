@@ -62,8 +62,6 @@ export default {
                 stock: '',
                 internal_code: '',
                 type: '',
-            },
-            images: {
                 img1: '',
                 img2: '',
                 img3: '',
@@ -84,7 +82,7 @@ export default {
     },
     methods: {
         Create(){
-            axios.post('items', { item: this.item, images: this.images })
+            axios.post('items', this.item)
                 .then((response) => {
                     //console.log('Correcto');
 
@@ -98,28 +96,28 @@ export default {
             var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0])
                 fileReader.onload = (event) => {
-                this.images.img1 = event.target.result
+                this.item.img1 = event.target.result
             }
             }
             if(img == 2){
             var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0])
                 fileReader.onload = (event) => {
-                this.images.img2 = event.target.result
+                this.item.img2 = event.target.result
             }
             }            
             if(img == 3){
             var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0])
                 fileReader.onload = (event) => {
-                this.images.img3 = event.target.result
+                this.item.img3 = event.target.result
             }
             }
             if(img == 4){
             var fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0])
                 fileReader.onload = (event) => {
-                this.images.img4 = event.target.result
+                this.item.img4 = event.target.result
             }
             }                       
              

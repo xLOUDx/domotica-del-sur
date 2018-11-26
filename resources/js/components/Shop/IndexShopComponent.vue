@@ -29,9 +29,9 @@
         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
                 <div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    <item-shop v-show="false" :prod="prod"> </item-shop> 
+                    <item-shop v-show="true" :prod="prod"> </item-shop> 
                 </div>
-                                <new-item v-show="true"> </new-item>
+                                <new-item v-show="false"> </new-item>
             </div>
         </div>
 
