@@ -109,6 +109,7 @@ class ProductController extends Controller
 
         $item->model = $request->model;
         $item->description = $request->description;
+        $item->data_sheet = $request->data_sheet;
         $item->stock = $request->stock;
         $item->internal_code = $request->internal_code;
         $item->type = $request->type;
@@ -126,9 +127,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-       return $product;
+       $item = Product::where('id', $id)->get();
+       return $item;
     }
 
     /**

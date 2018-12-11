@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('model');
             $table->text('description');
-            $table->string('data_sheet');
+            $table->text('data_sheet');
             $table->integer('stock');
             $table->string('internal_code');
             $table->string('type');

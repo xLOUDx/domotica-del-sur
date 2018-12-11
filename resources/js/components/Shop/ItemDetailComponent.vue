@@ -29,11 +29,11 @@
         </aside>
         <aside class="col-sm-6">
         <article class="card-body p-5">
-        <h3 class="title mb-3">Tipo</h3>
+        <h3 class="title mb-3">{{ data.model }}</h3>
 
         <p class="price-detail-wrap"> 
             <span class="price h3 text-warning"> 
-                <span class="currency">$</span><span class="num">28.000</span>
+                <span class="currency">$</span><span class="num">{{ data.price }}</span>
             </span> 
         </p> <!-- price-detail-wrap .// -->
         <dl class="item-property">
@@ -93,6 +93,9 @@ export default {
     data(){
         return{
             type: 'Comprar',
+            data: {
+
+            },
             img: {
                 img1:'img/about/2.jpg',
                 img2:'img/about/1.jpg',
@@ -102,12 +105,13 @@ export default {
             currentImg: ''
         }
     },
-    created(){
+    mounted(){
         this.currentImg = this.img.img1;
-
-        axios.get('items/' + this.$props.id)
+        const url = 'items/' + this.$props.id;
+        axios.get(url)
             .then((response) => {
-                console.log(response.data)
+                console.log(response.data);
+                this.data = response.data[0];
             })
             .catch((error) => {
                 console.log(error);

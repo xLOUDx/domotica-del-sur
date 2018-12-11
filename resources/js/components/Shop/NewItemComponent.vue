@@ -85,7 +85,6 @@ export default {
             axios.post('items', this.item)
                 .then((response) => {
                     //console.log('Correcto');
-
                     console.log(response.data);
                 })
                 .catch((error) => console.log(error))

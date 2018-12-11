@@ -51167,6 +51167,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             type: 'Comprar',
+            data: {},
             img: {
                 img1: 'img/about/2.jpg',
                 img2: 'img/about/1.jpg',
@@ -51176,11 +51177,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             currentImg: ''
         };
     },
-    created: function created() {
-        this.currentImg = this.img.img1;
+    mounted: function mounted() {
+        var _this = this;
 
-        axios.get('items/' + this.$props.id).then(function (response) {
+        this.currentImg = this.img.img1;
+        var url = 'items/' + this.$props.id;
+        axios.get(url).then(function (response) {
             console.log(response.data);
+            _this.data = response.data[0];
         }).catch(function (error) {
             console.log(error);
         });
@@ -51293,9 +51297,22 @@ var render = function() {
           _vm._v(" "),
           _c("aside", { staticClass: "col-sm-6" }, [
             _c("article", { staticClass: "card-body p-5" }, [
-              _c("h3", { staticClass: "title mb-3" }, [_vm._v("Tipo")]),
+              _c("h3", { staticClass: "title mb-3" }, [
+                _vm._v(_vm._s(_vm.data.model))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "price-detail-wrap" }, [
+                _c("span", { staticClass: "price h3 text-warning" }, [
+                  _c("span", { staticClass: "currency" }, [_vm._v("$")]),
+                  _c("span", { staticClass: "num" }, [
+                    _vm._v(_vm._s(_vm.data.price))
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _vm._m(1),
+              _vm._v(" "),
+              _c("hr"),
               _vm._v(" "),
               _vm._m(2),
               _vm._v(" "),
@@ -51309,10 +51326,6 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _vm._m(5),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
               _c(
                 "a",
                 { staticClass: "btn btn-primary text-uppercase text-white" },
@@ -51320,7 +51333,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm._m(6)
+              _vm._m(5)
             ])
           ])
         ])
@@ -51338,17 +51351,6 @@ var staticRenderFns = [
       { staticClass: "btn btn-primary", attrs: { href: "/tienda" } },
       [_c("strong", [_vm._v(" Volver a inicio ")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "price-detail-wrap" }, [
-      _c("span", { staticClass: "price h3 text-warning" }, [
-        _c("span", { staticClass: "currency" }, [_vm._v("$")]),
-        _c("span", { staticClass: "num" }, [_vm._v("28.000")])
-      ])
-    ])
   },
   function() {
     var _vm = this
@@ -51564,7 +51566,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51663,7 +51665,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Create: function Create() {
             axios.post('items', this.item).then(function (response) {
                 //console.log('Correcto');
-
                 console.log(response.data);
             }).catch(function (error) {
                 return console.log(error);
@@ -52048,7 +52049,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52059,6 +52060,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -52113,6 +52116,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/items').then(function (response) {
             _this.data = response.data;
+            //muestra en consola que esta llegando  
             console.log(response.data);
         }).catch(function (error) {
             return console.log(error);

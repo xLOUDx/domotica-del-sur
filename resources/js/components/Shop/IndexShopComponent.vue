@@ -29,9 +29,11 @@
         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
                 <div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                    <!-- PROD es el detalle que se envia a la cajita -->
+                    <!-- Si quieres agregar un producto cambia "v-show=true por false" -->
                     <item-shop v-show="true" :prod="prod"> </item-shop> 
                 </div>
-                                <new-item v-show="false"> </new-item>
+                <new-item v-show="false"> </new-item>
             </div>
         </div>
 
@@ -53,6 +55,7 @@ export default {
         axios.get('/items')
             .then((response) => {
                 this.data = response.data;
+                //muestra en consola que esta llegando  
                 console.log(response.data);  
             })
             .catch((error) => console.log(error))
