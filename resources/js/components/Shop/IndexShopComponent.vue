@@ -15,11 +15,9 @@
                 <a href="#" class="list-group-item active"> <span>Todas</span></a>
                 <a href="#" class="list-group-item"> <span>Domo</span></a>
                 <a href="#" class="list-group-item"> <span>IP</span></a>
-                <a href="#" class="list-group-item"> <span>DVR</span></a>
+                <a href="#" class="list-group-item" @click="newItem"> <span>DVR</span></a>
                 <!--Cart Modal start -->
-                <button class="alert alert-success"> 
-                    <cart-shop :type="type"> </cart-shop> 
-                </button>
+                <cart-shop class="alert alert-success" :type="type"> </cart-shop>                 
                 <!--Cart Modal end -->
             </div>
         </div>
@@ -28,12 +26,14 @@
         <!-- Shop items start -->
         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
+
+                <details-item v-show="detOpen"> </details-item>
                 <div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                     <!-- PROD es el detalle que se envia a la cajita -->
                     <!-- Si quieres agregar un producto cambia "v-show=true por false" -->
-                    <item-shop v-show="true" :prod="prod"> </item-shop> 
+                    <item-shop v-show="indexProd" :prod="prod"> </item-shop> 
                 </div>
-                <new-item v-show="false"> </new-item>
+                <new-item v-if="itemNew"> </new-item>
             </div>
         </div>
 
@@ -42,27 +42,43 @@
 </div>
 </template>
 <script>
+import EventBus from '../../event-bus';
+
 export default {
     data(){
         return{
             type: 'Carrito',
             data: {
-
-            }
+            },
+            detOpen: false,
+            indexProd: true,
+            itemNew: false
         }
     },
+
     created(){
         axios.get('/items')
             .then((response) => {
                 this.data = response.data;
-                //muestra en consola que esta llegando  
-                console.log(response.data);  
             })
-            .catch((error) => console.log(error))
-            
+            .catch((error) => console.log(error));
+
+        EventBus.$on('details', data => {
+            this.detOpen = !this.detOpen;
+            this.indexProd = !this.indexProd;
+        });
+
+        EventBus.$on('backStore', data => {
+            this.detOpen = !this.detOpen;
+            this.indexProd = !this.indexProd;
+        });
+
     },
     methods:{
-        
+        newItem(){
+            this.indexProd = !this.indexProd;
+            this.itemNew = !this.itemNew;
+        }
     }
 }
 

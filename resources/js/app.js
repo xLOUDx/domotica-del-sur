@@ -13,6 +13,8 @@ Vue.component('cart-shop', require('./components/Shop/CartShoppingModal.vue'));
 Vue.component('item-detail', require('./components/Shop/ItemDetailComponent.vue'));
 Vue.component('new-item', require('./components/Shop/NewItemComponent.vue'));
 
+Vue.component('details-item', require('./components/Shop/ItemDetailComponent.vue'));
+
 
 import ItemDetail from './components/Shop/ItemDetailComponent.vue'
 import indexShop from './components/Shop/IndexShopComponent.vue'

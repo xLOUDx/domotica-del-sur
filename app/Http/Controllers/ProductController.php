@@ -110,6 +110,7 @@ class ProductController extends Controller
         $item->model = $request->model;
         $item->description = $request->description;
         $item->data_sheet = $request->data_sheet;
+        $item->price = $request->price;
         $item->stock = $request->stock;
         $item->internal_code = $request->internal_code;
         $item->type = $request->type;

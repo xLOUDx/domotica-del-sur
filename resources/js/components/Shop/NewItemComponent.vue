@@ -14,6 +14,10 @@
                 <textarea v-model="item.data_sheet" class="form-control" rows="3"></textarea>
             </div>
             <div class="form-group">
+                <label for="exampleInputEmail1">Precio</label>
+                <input v-model="item.price" type="number" class="form-control">
+            </div>
+            <div class="form-group">
                 <label for="exampleInputEmail1">Stock</label>
                 <input v-model="item.stock" type="number" class="form-control">
             </div>
@@ -59,6 +63,7 @@ export default {
                 model: '',
                 description: '',
                 data_sheet: '',
+                price: '',
                 stock: '',
                 internal_code: '',
                 type: '',

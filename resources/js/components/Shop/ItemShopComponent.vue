@@ -4,16 +4,21 @@
 			 <div class="card">
 				<div class="side front">
 
-          <a @click="ShowDetail">
-            <div class="img"> <img class="img" :src="this.image" alt=""> </div>
-				    <div class="info">
+          <a @mouseover="mouseOver" @mouseout="mouseOver" @click="viewDetail">
+            <div class="img">
+              <img class="img" :src="this.image" alt=""> 
+            </div>
+				    <div  @mouseover="mouseOver" @mouseout="mouseOver" class="info">
 					    <h3>{{ this.prod.model }}</h3>
-					    <p>{{ this.prod.description }}</p> <!-- 42 Characters -->
+					    <p v-show="active2">{{ this.prod.description }}</p> <!-- 42 Characters -->
+              <div v-show="active" style="text-align: center;" class="bg-info rounded">
+                <h5 class="text-white"> $ {{ this.prod.price }} </h5>
+              </div> 
 				    </div>
           </a>
 
           <div class="card-footer text-muted" style="background-color:#EEEEEE">
-            <button class="btn btn-primary" style="width:100%"> 
+            <button @click="addCart" class="btn btn-primary" style="width:100%"> 
               <p class="text-white">Agregar al carrito</p> 
             </button>
           </div>
@@ -24,19 +29,37 @@
 </div>
 </template>
 <script>
+import EventBus from '../../event-bus';
+
 export default {
   props:['prod'],
 	data(){
 		return{
-      image: 'img/about/1.jpg',
+      image: '',
+      active: false,
+      active2: true
     }    
-	},
-      methods:{
-        ShowDetail(){
-          //console.log('Hola')
-          this.$router.push({ name: 'ItemDetail', params: { id: this.$props.prod.id }});
-        }
+  },
+  mounted(){
+    this.image = './items_img/' + this.$props.prod.img1;
+  },
+  methods:{
+    mouseOver(){
+      this.active = !this.active;
+      this.active2 = !this.active2;
+    },
+    addCart(){
+      let product = {
+        count: 1,
+        model: this.$props.prod.model,
+        price: this.$props.prod.price
       }
+      EventBus.$emit('addProduct', product);
+    },
+    viewDetail(){
+      EventBus.$emit('details', this.prod)
+    }
+  }
 }
 </script>
 <style lang="sass" scoped>
@@ -128,14 +151,6 @@ body
   margin: 4px
   perspective: 1000px
 
-// .active is applied to .card when .card is clicked.
-.active
-  transform: translateZ(0px) rotateY(180deg) !important
-  &:after
-    display: none
-  // &:hover:after
-  //   opacity: 0 !important
-
 .card
   display: inline-block
   +size(100%, 100%)
@@ -174,9 +189,6 @@ body
 
   .info
     padding: 16px
-
-
-
 // --------------
 // Front of card
 // --------------

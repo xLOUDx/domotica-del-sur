@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('model');
             $table->text('description');
             $table->text('data_sheet');
+            $table->integer('price');
             $table->integer('stock');
             $table->string('internal_code');
             $table->string('type');

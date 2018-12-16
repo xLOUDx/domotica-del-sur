@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-        
-        <a data-toggle="modal" data-target="#modalCart"> 
+
+        <button class="btn btn-outline-success" style="width:100%;height:100%" data-toggle="modal" data-target="#modalCart"> 
             <i class="fas fa-shopping-cart"></i>
-       			<span class="notify-badge"> {{ this.cart }} </span>
+       			<span class="notify-badge"> <strong> {{ this.cart }} </strong> </span>
             <span>{{ this.shop }}</span>
-        </a>
+        </button>
 
 <!-- Modal: modalCart -->
 <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -33,26 +33,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">ASP-8088</th>
-              <td>1</td>
-              <td>80.000</td>
-              <td>80.000</td>
-              <td><a><i class="fa fa-remove"></i></a></td>
-            </tr>
-            <tr>
-              <th scope="row">ASP-8088</th>
-              <td>1</td>
-              <td>80.000</td>
-              <td>80.000</td>
-              <td><a><i class="fa fa-remove"></i></a></td>
-            </tr>
-            <tr>
-              <th scope="row">ASP-8088</th>
-              <td>1</td>
-              <td>80.000</td>
-              <td>80.000</td>
-              <td><a><i class="fa fa-remove"></i></a></td>
+            <tr v-for="product in productAdd">
+              <th scope="row">{{ product.model }}</th>
+              <td>{{ product.count }}</td>
+              <td>{{ product.price }}</td>
+              <td> Total </td>
+              <td>
+                <button @click="delete" class="btn btn-outline-danger btn-sm"> 
+                  <i class="fas fa-times"></i> 
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -60,16 +50,12 @@
       </div>
       <!--Footer-->
       <div class="modal-footer">
-        <button style="" class="btn btn-outline-secondary btn-lg" data-dismiss="modal"> 
-            <p class="h4 font-weight-bold">
-            Cerrar
-            </p>
-            </button>
-        <button style="" class="btn btn-success btn-lg"> 
-            <p class="h4 font-weight-bold">
-            Pagar
-            </p>
-            </button>
+        <button style="" class="btn btn-outline-secondary" data-dismiss="modal"> 
+          Cerrar
+        </button>
+        <button style="" class="btn btn-success"> 
+          Pagar
+        </button>
       </div>
     </div>
   </div>
@@ -79,12 +65,36 @@
 </template>
 
 <script>
+import EventBus from '../../event-bus';
+
 export default {
   props:['type'],
   data(){
     return{
       cart: 20,
       shop: this.type,
+      productAdd: []
+    }
+  },
+  created(){
+    EventBus.$on('addProduct', data => {
+      let exist = this.productAdd.some(function(el){ return el.model === data.model});
+    
+      if(exist == true){
+        console.log('Existe');
+        this.productAdd.some(function(el){ return el.model === data.model, el.count = el.count + 1 });
+      } else{
+        this.productAdd.push(data);
+        console.log('No existe');
+      }
+
+      console.log(this.productAdd);
+
+    });
+  },
+  methods:{
+    delete(model){
+
     }
   }
 }
@@ -98,13 +108,16 @@ export default {
 }
 .notify-badge{
     position: absolute;
-    right:1px;
+    right:7px;
     top:5px;
     background:#3A833C;
-    text-align: top;
+    text-align: bottom;
     border-radius: 25PX 25PX 25PX 25PX;
     color:white;
     padding:2px 8px;
     font-size:12px;
+    align-items: center;
+    align-content: center;
+    align-self: center;
 }
 </style>
