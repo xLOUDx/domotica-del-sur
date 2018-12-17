@@ -16,17 +16,21 @@ class WebPayController extends Controller
         return view('prueba');
     }
 
-    public function redirect(){
+    public function redirect(Request $request){
+
+        $amount = $request->total;
+
+        //return $amount;
 
         $bag = CertificationBagFactory::integrationWebpayNormal();
         $plus = TransbankServiceFactory::normal($bag);
-        $plus->addTransactionDetail(10000, 'Orden824201');
+        $plus->addTransactionDetail(1000, 'Orden824201');
     
         $response = $plus->initTransaction('http://localhost:8000/response', 'http://localhost:8000/finish');
         
         //Asociar transacción con el token $response->token...... Guardarla en la DB o algo
 
-        return RedirectorHelper::redirectHTML($response->url, $response->token); 
+        return RedirectorHelper::redirectHTML('/redirect')->with($response->url, $response->token); 
     }
 
     public function response(Request $request){

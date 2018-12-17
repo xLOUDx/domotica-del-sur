@@ -50904,6 +50904,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50911,7 +50918,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: ['type'],
   data: function data() {
     return {
-      cart: 20,
+      totalPrice: 0,
+      cart: 0,
       shop: this.type,
       productAdd: []
     };
@@ -50920,26 +50928,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this = this;
 
     __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* default */].$on('addProduct', function (data) {
-      var exist = _this.productAdd.some(function (el) {
-        return el.model === data.model;
+      var exist = _this.productAdd.some(function (obj) {
+        return obj.model === data.model;
       });
 
       if (exist == true) {
-        console.log('Existe');
-        _this.productAdd.some(function (el) {
-          return el.model === data.model, el.count = el.count + 1;
+        var foundIndex = _this.productAdd.findIndex(function (x) {
+          return x.model == data.model;
         });
-      } else {
-        _this.productAdd.push(data);
-        console.log('No existe');
-      }
+        var cantidad = {
+          count: _this.productAdd[foundIndex].count + 1,
+          model: _this.productAdd[foundIndex].model,
+          price: _this.productAdd[foundIndex].price
+        };
 
-      console.log(_this.productAdd);
+        _this.productAdd[foundIndex] = cantidad;
+        _this.productAdd.push();
+      } else {
+        var newProduct = {
+          count: data.count,
+          model: data.model,
+          price: data.price
+        };
+
+        _this.productAdd.push(newProduct);
+      }
+      //this.totalPrice = this.totalPrice + 1
+      _this.cart = _this.cart + 1;
     });
+  },
+  updated: function updated() {
+    var total = 0;
+    for (var i = 0; i < this.productAdd.length; i++) {
+      total = total + this.productAdd[i].count * this.productAdd[i].price;
+    }
+    this.totalPrice = total;
   },
 
   methods: {
-    delete: function _delete(model) {}
+    quit: function quit(model, count) {
+      this.productAdd = this.productAdd.filter(function (obj) {
+        return obj.model !== model;
+      });
+
+      this.cart = this.cart - count;
+    },
+    getTotal: function getTotal(cant, price) {
+      var total = cant * price;
+      return total;
+    },
+    getPay: function getPay() {
+      axios.post('/redirect', { total: this.totalPrice }).then(function (response) {
+        window.location.href = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+      // window.location.href = '/redirect';
+    }
   }
 });
 
@@ -50947,7 +50992,189 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-outline-success",
+        staticStyle: { width: "100%", height: "100%" },
+        attrs: { "data-toggle": "modal", "data-target": "#modalCart" }
+      },
+      [
+        _c("i", { staticClass: "fas fa-shopping-cart" }),
+        _vm._v(" "),
+        this.cart
+          ? _c("span", { staticClass: "notify-badge" }, [
+              _c("strong", [_vm._v(" " + _vm._s(this.cart) + " ")])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("span", [_vm._v(_vm._s(this.shop))])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade text-dark",
+        attrs: {
+          id: "modalCart",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      _vm._l(_vm.productAdd, function(product) {
+                        return _c("tr", [
+                          _c("th", { attrs: { scope: "row" } }, [
+                            _vm._v(_vm._s(product.model))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("$" + _vm._s(product.price))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(product.count))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "$" +
+                                _vm._s(
+                                  _vm.getTotal(product.count, product.price)
+                                )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-danger btn-sm",
+                                on: {
+                                  click: function($event) {
+                                    _vm.quit(product.model, product.count)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-times" })]
+                            )
+                          ])
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td"),
+                        _vm._v(" "),
+                        _c("td"),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "font-weight-bold" }, [
+                          _vm._v("Monto final: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "font-weight-bold h5" }, [
+                          _vm._v(" " + _vm._s(this.totalPrice) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("td")
+                      ])
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-secondary",
+                    attrs: { "data-dismiss": "modal" }
+                  },
+                  [_vm._v(" \n          Cerrar\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", on: { click: _vm.getPay } },
+                  [_vm._v(" \n          Pagar\n        ")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h4",
+        {
+          staticClass: "modal-title",
+          staticStyle: { "padding-left": "5px" },
+          attrs: { id: "myModalLabel" }
+        },
+        [_vm._v("Tu compra")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Producto")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Remove")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -51150,6 +51377,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.img.img3 = './items_img/' + this.data[0].img3;
             this.img.img4 = './items_img/' + this.data[0].img4;
             this.currentImg = this.img.img1;
+        },
+        addCart: function addCart() {
+            var product = {
+                count: 1,
+                model: this.data[0].model,
+                price: this.data[0].price
+            };
+            __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* default */].$emit('addProduct', product);
         }
     }
 });
@@ -51357,7 +51592,18 @@ var render = function() {
                   _vm._v(" "),
                   _c("hr"),
                   _vm._v(" "),
-                  _vm._m(0)
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "btn btn-outline-primary text-primary text-uppercase",
+                      on: { click: _vm.addCart }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-shopping-cart" }),
+                      _vm._v("Agregar al carrito")
+                    ]
+                  )
                 ])
               ])
             ])
@@ -51366,24 +51612,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-outline-primary text-uppercase",
-        attrs: { href: "#" }
-      },
-      [
-        _c("i", { staticClass: "fas fa-shopping-cart" }),
-        _vm._v("Agregar al carrito")
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -52179,6 +52408,7 @@ var render = function() {
                         expression: "indexProd"
                       }
                     ],
+                    staticClass: "align-self: center !important;",
                     attrs: { prod: prod }
                   })
                 ],

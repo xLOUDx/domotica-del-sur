@@ -76,7 +76,7 @@
             <!--<a class="btn btn-primary text-uppercase text-white"> 
                 <cart-shop :type="type"> </cart-shop> 
             </a> -->
-            <a href="#" class="btn btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>Agregar al carrito</a>
+            <a @click="addCart" class="btn btn-outline-primary text-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>Agregar al carrito</a>
         </article> <!-- card-body.// -->
         </aside> <!-- col.// -->
         </div> <!-- row.// -->
@@ -145,6 +145,14 @@ export default {
             this.img.img3 = './items_img/' + this.data[0].img3;
             this.img.img4 = './items_img/' + this.data[0].img4;
             this.currentImg = this.img.img1;
+        },
+        addCart(){
+            let product = {
+                count: 1,
+                model: this.data[0].model,
+                price: this.data[0].price
+            }
+            EventBus.$emit('addProduct', product);
         }
     }
 }

@@ -31,7 +31,7 @@
                 <div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                     <!-- PROD es el detalle que se envia a la cajita -->
                     <!-- Si quieres agregar un producto cambia "v-show=true por false" -->
-                    <item-shop v-show="indexProd" :prod="prod"> </item-shop> 
+                    <item-shop class="align-self: center !important;" v-show="indexProd" :prod="prod"> </item-shop> 
                 </div>
                 <new-item v-if="itemNew"> </new-item>
             </div>
