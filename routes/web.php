@@ -9,9 +9,7 @@ Route::get('/tienda', function () {
 });
 
 Route::post('/redirect', 'WebPayController@redirect');
-
 Route::get('/prueba', 'WebPayController@index');
-//Route::get('/redirect', 'WebPayController@redirect');
 Route::post('/response', 'WebPayController@response');
 Route::post('/finish', 'WebPayController@finish');
 
@@ -19,3 +17,11 @@ Route::resource('/items', 'ProductController');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

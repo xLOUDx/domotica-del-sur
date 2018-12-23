@@ -57,12 +57,24 @@
       </div>
       <!--Footer-->
       <div class="modal-footer">
-        <button style="" class="btn btn-outline-secondary" data-dismiss="modal"> 
+        <button :disabled="this.disb" class="btn btn-outline-secondary" data-dismiss="modal"> 
           Cerrar
         </button>
-        <button @click="getPay" class="btn btn-success"> 
-          Pagar
-        </button>
+        <button 
+          v-if="this.totalPrice"
+          v-html="this.status" 
+          @click="getPay"
+          :disabled="this.disb" 
+          class="btn btn-success" /> 
+           
+
+      <div style="display:none;">
+        <form :action=this.url>
+          <input type="hidden" name="TBK_TOKEN" :value=this.token />
+          <button ref="submitButton" type="submit"> Enviar </button>
+        </form>
+      </div>
+
       </div>
     </div>
   </div>
@@ -81,7 +93,11 @@ export default {
       totalPrice: 0,
       cart: 0,
       shop: this.type,
-      productAdd: []
+      productAdd: [],
+      url: '',
+      token: '',
+      status: 'pagar',
+      disb: false
     }
   },
   created(){
@@ -135,13 +151,22 @@ export default {
       let total = cant * price;
       return total;
     },
-    getPay(){
-      axios.post('/redirect', { total:this.totalPrice })
+    getPay(){    
+      this.status = "<i class='fa fa-spinner fa-spin '></i> Procesando..."
+      this.disb = true;
+
+      axios.post('/redirect', { total: this.totalPrice })
         .then((response) => {
-          window.location.href = response.data;
+          console.log(response.data);
+          this.url = response.data.url;
+          this.token = response.data.token;
+        }) 
+        .then((response) =>{
+          this.$refs.submitButton.click();
         })
-        .catch((error) => { console.log(error); })
-       // window.location.href = '/redirect';
+        .catch((error) => {
+          console.log(error);
+        })
     }
   }
 }

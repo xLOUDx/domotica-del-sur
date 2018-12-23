@@ -104,7 +104,7 @@
 
                   <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href=# >Usuario</a></li>
+                      <li><a href="http://localhost:8000/login#/" >Usuario</a></li>
                       <li><a href=# >Cliente</a></li>
                     </ul> 
                   </li>

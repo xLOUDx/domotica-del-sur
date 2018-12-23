@@ -9,20 +9,20 @@
         <aside class="col-sm-6 border-right">
         <article class="gallery-wrap"> 
             <div class="img-big-wrap">
-                 <img v-on:load="onLoaded" v-show="loaded" class="img-responsive" :src="this.currentImg"> 
+                 <img class="img-responsive" :src="this.currentImg"> 
             </div> <!-- slider-product.// -->
             <div v-if="this.img" class="img-small-wrap">
                 <div @click="ChangePic(1)" class="item-gallery"> 
-                    <img v-on:load="onLoaded" v-show="loaded" :src="this.img.img1">
+                    <img v-if="this.img.img1" :src="this.img.img1">
                 </div>
                 <div @click="ChangePic(2)" class="item-gallery"> 
-                    <img v-on:load="onLoaded" v-show="loaded" :src="this.img.img2">
+                    <img v-if="this.img.img2" :src="this.img.img2">
                 </div>
                 <div @click="ChangePic(3)" class="item-gallery"> 
-                    <img v-on:load="onLoaded" v-show="loaded" :src="this.img.img3">
+                    <img v-if="this.img.img3" :src="this.img.img3">
                 </div>
                 <div @click="ChangePic(4)" class="item-gallery"> 
-                    <img v-on:load="onLoaded" v-show="loaded" :src="this.img.img4">
+                    <img v-if="this.img.img4" :src="this.img.img4">
                 </div>
             </div> <!-- slider-nav.// -->
         </article> <!-- gallery-wrap .end// -->
@@ -43,9 +43,7 @@
         <hr>
         <dl class="item-property">
             <dt>Fincha técnica</dt>
-
-                <div  class="text-body" v-html="this.descripcion" ></div>
-
+            <div  class="text-body" v-html="this.descripcion" ></div>
         </dl>
         <hr>
         <dl class="param param-feature">
@@ -53,29 +51,7 @@
         <dd>{{ data[0].type }}</dd>
         </dl>  <!-- item-property-hor .// -->
 
-        <hr>
-        
-           <!-- <div class="row">
-                <div class="col-sm-5 col-md-8 col-lg-12">
-                    <dt>Cantidad</dt>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Seleccione
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">1</a>
-                            <a class="dropdown-item" href="#">2</a>
-                            <a class="dropdown-item" href="#">3</a>
-                            <a class="dropdown-item" href="#">4</a>
-                            <a class="dropdown-item" href="#">5</a>
-                        </div>
-                        </div>
-                </div> 
-            </div> --> 
-            <hr>
-            <!--<a class="btn btn-primary text-uppercase text-white"> 
-                <cart-shop :type="type"> </cart-shop> 
-            </a> -->
+        <hr><hr>
             <a @click="addCart" class="btn btn-outline-primary text-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>Agregar al carrito</a>
         </article> <!-- card-body.// -->
         </aside> <!-- col.// -->
@@ -92,7 +68,6 @@ export default {
     data(){
         return{
             type: 'Comprar',
-            loaded: false,
             data: [
             ],
             img: {
@@ -136,14 +111,11 @@ export default {
         shooping(){
             EventBus.$emit('backStore');
         },
-        onLoaded() {
-        this.loaded = true;
-        },
-        getImage(){
-            this.img.img1 = './items_img/' + this.data[0].img1;
-            this.img.img2 = './items_img/' + this.data[0].img2;
-            this.img.img3 = './items_img/' + this.data[0].img3;
-            this.img.img4 = './items_img/' + this.data[0].img4;
+        async getImage(){
+            this.img.img1 = await './items_img/' + this.data[0].img1;
+            this.img.img2 = await './items_img/' + this.data[0].img2;
+            this.img.img3 = await './items_img/' + this.data[0].img3;
+            this.img.img4 = await './items_img/' + this.data[0].img4;
             this.currentImg = this.img.img1;
         },
         addCart(){
