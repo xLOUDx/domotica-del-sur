@@ -9,7 +9,6 @@ Route::get('/tienda', function () {
 });
 
 Route::post('/redirect', 'WebPayController@redirect');
-Route::get('/prueba', 'WebPayController@index');
 Route::post('/response', 'WebPayController@response');
 Route::post('/finish', 'WebPayController@finish');
 

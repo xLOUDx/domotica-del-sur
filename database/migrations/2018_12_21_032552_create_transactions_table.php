@@ -18,8 +18,9 @@ class CreateTransactionsTable extends Migration
             $table->text('authorizationcode')->nullable(true);
             $table->text('payment')->nullable(true);
             $table->text('approved')->nullable(true);
+            $table->text('sharesNumber')->nullable(true);
+            $table->text('cardnumber')->nullable(true);
             $table->text('ammount');
-            //$table->text('comercecode')->nullable(true);;
             $table->text('buyorder');
             $table->text('transactiontoken');
             $table->timestamps();

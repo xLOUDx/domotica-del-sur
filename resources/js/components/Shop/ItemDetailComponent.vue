@@ -11,18 +11,18 @@
             <div class="img-big-wrap">
                  <img class="img-responsive" :src="this.currentImg"> 
             </div> <!-- slider-product.// -->
-            <div v-if="this.img" class="img-small-wrap">
+            <div v-if="this.img" style="background-color:red" class="img-small-wrap">
                 <div @click="ChangePic(1)" class="item-gallery"> 
-                    <img v-if="this.img.img1" :src="this.img.img1">
+                    <img :src="this.img.img1"> 
                 </div>
                 <div @click="ChangePic(2)" class="item-gallery"> 
-                    <img v-if="this.img.img2" :src="this.img.img2">
+                    <img :src="this.img.img2"> 
                 </div>
                 <div @click="ChangePic(3)" class="item-gallery"> 
-                    <img v-if="this.img.img3" :src="this.img.img3">
+                    <img :src="this.img.img3"> 
                 </div>
                 <div @click="ChangePic(4)" class="item-gallery"> 
-                    <img v-if="this.img.img4" :src="this.img.img4">
+                    <img :src="this.img.img4"> 
                 </div>
             </div> <!-- slider-nav.// -->
         </article> <!-- gallery-wrap .end// -->
@@ -63,6 +63,8 @@
 
 <script>
 import EventBus from '../../event-bus';
+import VLazyImage from "v-lazy-image";
+
 
 export default {
     data(){
@@ -111,11 +113,11 @@ export default {
         shooping(){
             EventBus.$emit('backStore');
         },
-        async getImage(){
-            this.img.img1 = await './items_img/' + this.data[0].img1;
-            this.img.img2 = await './items_img/' + this.data[0].img2;
-            this.img.img3 = await './items_img/' + this.data[0].img3;
-            this.img.img4 = await './items_img/' + this.data[0].img4;
+        getImage(){
+            this.img.img1 = './items_img/' + this.data[0].img1;
+            this.img.img2 = './items_img/' + this.data[0].img2;
+            this.img.img3 = './items_img/' + this.data[0].img3;
+            this.img.img4 = './items_img/' + this.data[0].img4;
             this.currentImg = this.img.img1;
         },
         addCart(){

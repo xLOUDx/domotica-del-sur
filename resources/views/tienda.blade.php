@@ -102,8 +102,6 @@
   <!-- JavaScript Libraries -->
   <script src="lib/wow/wow.min.js"></script>
 
-
-  <!-- Contact Form JavaScript File -->
   <script src="{{ asset('js/app.js') }}"> </script>
   <script src="js/main.js"></script>
 </body>

@@ -14,7 +14,7 @@
     <div class="modal-content">
       <!--Header-->
       <div class="modal-header">
-        <h4 class="modal-title" style="padding-left:5px" id="myModalLabel">Tu compra</h4>
+        <h4 class="modal-title" style="padding-left:5px" id="myModalLabel">Carrito</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -96,7 +96,7 @@ export default {
       productAdd: [],
       url: '',
       token: '',
-      status: 'pagar',
+      status: 'Pagar',
       disb: false
     }
   },
@@ -126,7 +126,6 @@ export default {
 
         this.productAdd.push(newProduct);
       }
-      //this.totalPrice = this.totalPrice + 1
       this.cart = this.cart + 1;
 
     });
@@ -155,7 +154,7 @@ export default {
       this.status = "<i class='fa fa-spinner fa-spin '></i> Procesando..."
       this.disb = true;
 
-      axios.post('/redirect', { total: this.totalPrice })
+      axios.post('/redirect', { total: this.totalPrice, product: this.productAdd })
         .then((response) => {
           console.log(response.data);
           this.url = response.data.url;
@@ -165,7 +164,20 @@ export default {
           this.$refs.submitButton.click();
         })
         .catch((error) => {
-          console.log(error);
+          const toast = this.$swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+          });
+
+          toast({
+          type: 'error',
+          title: 'Error conectando con el servidor'
+          });
+
+          this.status = "Pagar"
+          this.disb = false;
         })
     }
   }

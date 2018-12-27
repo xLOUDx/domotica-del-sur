@@ -23,9 +23,9 @@ class CreateProductsTable extends Migration
             $table->string('internal_code');
             $table->string('type');
             $table->string('img1');
-            $table->string('img2');
-            $table->string('img3');
-            $table->string('img4');
+            $table->string('img2')->nullable(true);
+            $table->string('img3')->nullable(true);
+            $table->string('img4')->nullable(true);
             $table->timestamps();
         });
     }
