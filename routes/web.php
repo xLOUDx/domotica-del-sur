@@ -13,7 +13,7 @@ Route::post('/response', 'WebPayController@response');
 Route::post('/finish', 'WebPayController@finish');
 
 Route::resource('/items', 'ProductController');
-
+Route::resource('/transactions', 'TransactionController');
 
 
 

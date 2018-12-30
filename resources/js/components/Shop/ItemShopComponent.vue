@@ -6,7 +6,8 @@
 
           <a @mouseover="mouseOver" @mouseout="mouseOver" @click="viewDetail">
             <div class="img">
-              <img class="img" :src="this.image" alt=""> 
+              <img class="img" :src="this.image" /> 
+
             </div>
 				    <div  @mouseover="mouseOver" @mouseout="mouseOver" class="info">
 					    <h3>{{ this.prod.model }}</h3>

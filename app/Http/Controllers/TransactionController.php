@@ -14,7 +14,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $products = Transaction::all();
+        return $products;
     }
 
     /**

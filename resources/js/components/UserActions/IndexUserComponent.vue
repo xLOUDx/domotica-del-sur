@@ -22,8 +22,6 @@
             </div>
         </div>
         </div> <br>
-
-            <shop-finish> </shop-finish>
             <router-view> </router-view>
     </div>
 </template>

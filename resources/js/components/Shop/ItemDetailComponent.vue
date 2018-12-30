@@ -63,8 +63,6 @@
 
 <script>
 import EventBus from '../../event-bus';
-import VLazyImage from "v-lazy-image";
-
 
 export default {
     data(){

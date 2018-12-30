@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { VLazyImagePlugin } from "v-lazy-image";
 import VueSweetalert2 from 'vue-sweetalert2';
 
 Vue.use(VueSweetalert2);
-Vue.use(VLazyImagePlugin);
 Vue.use(VueRouter)
 
 require('./bootstrap');
@@ -12,7 +10,6 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('item-shop', require('./components/Shop/ItemShopComponent.vue'));
 Vue.component('cart-shop', require('./components/Shop/CartShoppingModal.vue'));
 Vue.component('item-detail', require('./components/Shop/ItemDetailComponent.vue'));
