@@ -15,6 +15,9 @@ Route::post('/finish', 'WebPayController@finish');
 Route::resource('/items', 'ProductController');
 Route::resource('/transactions', 'TransactionController');
 
+Route::post('/poto', 'ProductController@poto');
+Route::post('/algo', 'ProductController@algo');
+
 
 
 Auth::routes();

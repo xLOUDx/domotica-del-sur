@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Image;
 
 class ProductController extends Controller
 {
@@ -55,6 +55,11 @@ class ProductController extends Controller
             $filename1 = $request->model.'_img1'.'.'.$extension1;
             $path1 = public_path('items_img').'/'.$filename1;
             file_put_contents($path1, $decoded1); 
+
+            //Pequeña
+            $path11 = public_path('items_img/thumb').'/'.$filename1;
+            file_put_contents($path11, $decoded1); 
+            //Pequeña
             /*ONE*/
 
             /*TWO*/
@@ -69,7 +74,12 @@ class ProductController extends Controller
     
             $filename2 = $request->model.'_img2'.'.'.$extension2;
             $path2 = public_path('items_img').'/'.$filename2;
-            file_put_contents($path2, $decoded2); 
+            file_put_contents($path2, $decoded2);
+            
+            //Pequeña
+            $path22 = public_path('items_img/thumb').'/'.$filename2;
+            file_put_contents($path22, $decoded2); 
+            //Pequeña
             /*TWO*/
 
             /*THREE*/
@@ -85,6 +95,12 @@ class ProductController extends Controller
             $filename3 = $request->model.'_img3'.'.'.$extension3;
             $path3 = public_path('items_img').'/'.$filename3;
             file_put_contents($path3, $decoded3); 
+
+            //Pequeña
+            $path33 = public_path('items_img/thumb').'/'.$filename3;
+            file_put_contents($path33, $decoded3); 
+            //Pequeña
+
             /*THREE*/
 
             /*FOUR*/
@@ -100,6 +116,11 @@ class ProductController extends Controller
             $filename4 = $request->model.'_img4'.'.'.$extension4;
             $path4 = public_path('items_img').'/'.$filename4;
             file_put_contents($path4, $decoded4); 
+
+            //Pequeña
+            $path44 = public_path('items_img/thumb').'/'.$filename4;
+            file_put_contents($path44, $decoded4); 
+            //Pequeña
             /*FOUR*/
         /* Get, transform and save the image */
         /* ¡¡FIX THIS CODE!!*/
@@ -120,6 +141,91 @@ class ProductController extends Controller
         $item->img4 = $filename4; 
 
         $item->save();
+
+        //Minimizarlas y guardarlas
+
+        $thumbnailpath = public_path('items_img/'. $filename1);
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/'. $filename2);
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/'. $filename3);
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/'. $filename4);
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+
+        //Imagenes thumb pequeñas
+        $thumbnailpath = public_path('items_img/thumb/'. $filename1);
+        $img = Image::make($thumbnailpath)->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/thumb/'. $filename2);
+        $img = Image::make($thumbnailpath)->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/thumb/'. $filename3);
+        $img = Image::make($thumbnailpath)->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/thumb/'. $filename4);
+        $img = Image::make($thumbnailpath)->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+    }
+
+    public function algo(Request $request){
+
+        /* $exploded4 = explode(',', $request);
+        $decoded4 = base64_decode($exploded4[1]);
+
+        $respuesta = base64_decode($exploded4[0]);
+
+        echo $respuesta; */
+        $thumbnailpath = public_path('items_img/ASP-8118_img1.jpg');
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/ASP-8118_img2.jpg');
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/ASP-8118_img3.jpg');
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
+
+        $thumbnailpath = public_path('items_img/ASP-8118_img4.jpg');
+        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($thumbnailpath);
     }
 
     /**
@@ -155,6 +261,37 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+    }
+
+    public function poto(Request $request){
+
+        if($request->hasFile('profile_image')) {
+            //get filename with extension
+            $filenamewithextension = $request->file('profile_image')->getClientOriginalName();
+     
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+     
+            //get file extension
+            $extension = $request->file('profile_image')->getClientOriginalExtension();
+     
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+     
+            //Upload File
+            $request->file('profile_image')->storeAs('public/profile_images', $filenametostore);
+            $request->file('profile_image')->storeAs('public/profile_images/thumbnail', $filenametostore);
+     
+            //Resize image here
+            $thumbnailpath = public_path('storage/profile_images/thumbnail/'.$filenametostore);
+            $img = Image::make($thumbnailpath)->resize(400, 400, function($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save($thumbnailpath);
+     
+            return 'wena. la hiciste';
+        }
+
     }
 
     /**

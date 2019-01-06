@@ -42,7 +42,7 @@ export default {
     }    
   },
   mounted(){
-    this.image = './items_img/' + this.$props.prod.img1;
+    this.image = './items_img/thumb/' + this.$props.prod.img1;
   },
   methods:{
     mouseOver(){

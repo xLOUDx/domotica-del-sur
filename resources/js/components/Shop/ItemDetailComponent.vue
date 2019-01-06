@@ -11,18 +11,18 @@
             <div class="img-big-wrap">
                  <img class="img-responsive" :src="this.currentImg"> 
             </div> <!-- slider-product.// -->
-            <div v-if="this.img" style="background-color:red" class="img-small-wrap">
+            <div v-if="this.img" class="img-small-wrap">
                 <div @click="ChangePic(1)" class="item-gallery"> 
-                    <img :src="this.img.img1"> 
+                    <img alt="Smiley face" :src="this.thumb.img1"> 
                 </div>
                 <div @click="ChangePic(2)" class="item-gallery"> 
-                    <img :src="this.img.img2"> 
+                    <img alt="Smiley face" :src="this.thumb.img2"> 
                 </div>
                 <div @click="ChangePic(3)" class="item-gallery"> 
-                    <img :src="this.img.img3"> 
+                    <img alt="Smiley face" :src="this.thumb.img3"> 
                 </div>
                 <div @click="ChangePic(4)" class="item-gallery"> 
-                    <img :src="this.img.img4"> 
+                    <img alt="Smiley face" :src="this.thumb.img4"> 
                 </div>
             </div> <!-- slider-nav.// -->
         </article> <!-- gallery-wrap .end// -->
@@ -76,6 +76,12 @@ export default {
                 img3:null,
                 img4:null
             },
+            thumb: {
+                img1:null,
+                img2:null,
+                img3:null,
+                img4:null
+            },
             currentImg: null,
             descripcion: ''
         }
@@ -112,6 +118,11 @@ export default {
             EventBus.$emit('backStore');
         },
         getImage(){
+            this.thumb.img1 = './items_img/thumb/' + this.data[0].img1;
+            this.thumb.img2 = './items_img/thumb/' + this.data[0].img2;
+            this.thumb.img3 = './items_img/thumb/' + this.data[0].img3;
+            this.thumb.img4 = './items_img/thumb/' + this.data[0].img4;
+
             this.img.img1 = './items_img/' + this.data[0].img1;
             this.img.img2 = './items_img/' + this.data[0].img2;
             this.img.img3 = './items_img/' + this.data[0].img3;

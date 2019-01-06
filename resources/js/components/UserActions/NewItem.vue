@@ -101,7 +101,6 @@ export default {
                 this.image.img2 = 'http://localhost:8000/items_img/'+response.data[0].img2;
                 this.image.img3 = 'http://localhost:8000/items_img/'+response.data[0].img3;
                 this.image.img4 = 'http://localhost:8000/items_img/'+response.data[0].img4;
-
             })
             .catch((error) => console.log(error))
     },
@@ -110,40 +109,70 @@ export default {
             this.status = "<i class='fa fa-spinner fa-spin '></i> Procesando..."
             this.disb = true;
 
-            axios.post('items', this.item)
-                .then((response) => {
-                    //console.log(response.data);
-                    this.status = "Guardar"
-                    this.disb = false;
+            let validates = true;
 
-                    const toast = this.$swal.mixin({
+            for (var it in this.item) {
+                if (this.item[it] == ''){
+                    validates = false;
+                }
+            }
+
+            if( validates == false ){
+
+                this.status = "Guardar"
+                this.disb = false;
+
+                const toast = this.$swal.mixin({
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
                     timer: 3000
-                    });
+                });
 
-                    toast({
-                    type: 'success',
-                    title: 'Producto creado correctamente'
-                    });
-                })
-                .catch((error) => { 
-                    const toast = this.$swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                    });
+                toast({
+                    type: 'warning',
+                    title: 'Complete TODOS los campos'
+                });
+            } else {
 
-                    toast({
-                    type: 'error',
-                    title: 'Algo salió mal'
-                    });
+                axios.post('items', this.item)
+                    .then((response) => {
+                        //console.log(response.data);
+                        this.status = "Guardar"
+                        this.disb = false;
 
-                    this.status = "Guardar"
-                    this.disb = false;
-                }); 
+                        const toast = this.$swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+
+                        toast({
+                            type: 'success',
+                            title: 'Producto creado correctamente'
+                        });
+
+                        this.item = [];
+                        window.location.reload();
+                    })
+                    .catch((error) => { 
+                        const toast = this.$swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+
+                        toast({
+                            type: 'error',
+                            title: 'Algo salió mal'
+                        });
+
+                        this.status = "Guardar"
+                        this.disb = false;
+                    });
+            }
         },
         imageChanged(event, img){
             

@@ -9,6 +9,7 @@
         "cokecancino/laravel-flow": "^1.2",
         "fideloper/proxy": "^4.0",
         "freshwork/transbank": "^1.0",
+        "intervention/image": "^2.4",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0"
     },
