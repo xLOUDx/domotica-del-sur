@@ -11,14 +11,13 @@ Route::get('/tienda', function () {
 Route::post('/redirect', 'WebPayController@redirect');
 Route::post('/response', 'WebPayController@response');
 Route::post('/finish', 'WebPayController@finish');
+Route::get('/client', 'ClientController@getHome');
+
+
 
 Route::resource('/items', 'ProductController');
 Route::resource('/transactions', 'TransactionController');
-
-Route::post('/poto', 'ProductController@poto');
-Route::post('/algo', 'ProductController@algo');
-
-
+Route::resource('/clients', 'ClientController');
 
 Auth::routes();
 

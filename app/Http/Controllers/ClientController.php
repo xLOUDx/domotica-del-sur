@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\client;
+use App\Client;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -14,7 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Product::all();
+        return $clients;
     }
 
     /**
@@ -27,6 +29,20 @@ class ClientController extends Controller
         //
     }
 
+    public function getHome(){
+        return view('client');
+        /* $actualUser = Client::where('email', $request->email)->get();
+
+
+        if (Hash::check( $request->password, $actualUser->password )) {
+            print_r ('es la misma');
+            return true;
+        } else{
+            print_r ('no es la misma');
+            return false;
+        } */
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,16 +51,28 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newClient = new Client;
+
+        $newClient->name = $request->name;
+        $newClient->rut = $request->rut;
+        $newClient->email = $request->email;
+        $newClient->address = $request->address;
+        $newClient->company = $request->company;
+        $newClient->company_rut = $request->companyRut;
+        $newClient->discount = $request->discount;
+        $newClient->password =  Hash::make($request->password);
+        $newClient->save();
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\client  $client
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(client $client)
+    public function show(Client $client)
     {
         //
     }
@@ -52,10 +80,10 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\client  $client
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(client $client)
+    public function edit(Client $client)
     {
         //
     }
@@ -64,10 +92,10 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\client  $client
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, client $client)
+    public function update(Request $request, Client $client)
     {
         //
     }
@@ -75,10 +103,10 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\client  $client
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(client $client)
+    public function destroy(Client $client)
     {
         //
     }

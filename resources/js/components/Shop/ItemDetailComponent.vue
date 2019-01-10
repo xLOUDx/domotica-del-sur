@@ -33,7 +33,7 @@
 
         <p class="price-detail-wrap"> 
             <span class="price h3 text-primary font-weight-bold"> 
-                <span class="currency">$ </span><span class="num">{{ data[0].price }}</span>
+                <span class="currency">$ </span><span class="num">{{ this.amunt }}</span>
             </span> 
         </p> <!-- price-detail-wrap .// -->
         <dl class="item-property">
@@ -68,6 +68,7 @@ export default {
     data(){
         return{
             type: 'Comprar',
+            amunt: 0,
             data: [
             ],
             img: {
@@ -128,6 +129,10 @@ export default {
             this.img.img3 = './items_img/' + this.data[0].img3;
             this.img.img4 = './items_img/' + this.data[0].img4;
             this.currentImg = this.img.img1;
+            let valor = this.data[0].price;
+            valor = valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            this.amunt = valor;            
+
         },
         addCart(){
             let product = {

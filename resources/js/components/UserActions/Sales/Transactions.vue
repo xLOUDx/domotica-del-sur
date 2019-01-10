@@ -12,6 +12,8 @@
             <th class="table-primary" scope="col">Monto</th>
             <th class="table-primary" scope="col">Orden de compra</th>
             <th class="table-primary" scope="col">Fecha</th>
+            <th class="table-primary" scope="col">Detalles</th>
+
             </tr>
         </thead>
         <tbody>
@@ -19,11 +21,12 @@
                 <th scope="row">{{ tran.id }}</th>
                 <td>{{ tran.authorizationcode }}</td>
                 <td>{{ tran.payment }}</td>
-                <td>{{ tran.approved }}</td>
+                <td style="background-color:#DAF7A6;">{{ tran.approved }}</td>
                 <td>{{ tran.sharesNumber }}</td>
-                <td>{{ tran.ammount }}</td>
+                <td style="background-color:#FFC300;">$ {{ tran.ammount }}</td>
                 <td>{{ tran.buyorder }}</td>
                 <td>{{ tran.created_at }}</td>
+                <th> <a href="#">Ver detalles...</a> </th>
             </tr>
         </tbody>
         </table>

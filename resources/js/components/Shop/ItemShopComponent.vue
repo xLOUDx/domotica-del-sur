@@ -13,7 +13,7 @@
 					    <h3>{{ this.prod.model }}</h3>
 					    <p v-show="active2">{{ this.prod.description }}</p> <!-- 42 Characters -->
               <div v-show="active" style="text-align: center;" class="bg-info rounded">
-                <h5 class="text-white"> $ {{ this.prod.price }} </h5>
+                <h5 class="text-white"> $ {{ this.price }} </h5>
               </div> 
 				    </div>
           </a>
@@ -36,6 +36,7 @@ export default {
   props:['prod'],
 	data(){
 		return{
+      price: 0,
       image: '',
       active: false,
       active2: true
@@ -43,6 +44,11 @@ export default {
   },
   mounted(){
     this.image = './items_img/thumb/' + this.$props.prod.img1;
+    let valor = this.$props.prod.price;
+    valor = valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    console.log(valor);
+    this.price = valor;  
+    
   },
   methods:{
     mouseOver(){

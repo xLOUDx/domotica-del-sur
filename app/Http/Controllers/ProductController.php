@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Intermediary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Image;
+use Illuminate\Support\Facades\File;
+
 
 class ProductController extends Controller
 {
@@ -195,39 +198,6 @@ class ProductController extends Controller
         $img->save($thumbnailpath);
     }
 
-    public function algo(Request $request){
-
-        /* $exploded4 = explode(',', $request);
-        $decoded4 = base64_decode($exploded4[1]);
-
-        $respuesta = base64_decode($exploded4[0]);
-
-        echo $respuesta; */
-        $thumbnailpath = public_path('items_img/ASP-8118_img1.jpg');
-        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($thumbnailpath);
-
-        $thumbnailpath = public_path('items_img/ASP-8118_img2.jpg');
-        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($thumbnailpath);
-
-        $thumbnailpath = public_path('items_img/ASP-8118_img3.jpg');
-        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($thumbnailpath);
-
-        $thumbnailpath = public_path('items_img/ASP-8118_img4.jpg');
-        $img = Image::make($thumbnailpath)->resize(1000, 1000, function($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($thumbnailpath);
-    }
-
     /**
      * Display the specified resource.
      *
@@ -260,38 +230,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
-    }
-
-    public function poto(Request $request){
-
-        if($request->hasFile('profile_image')) {
-            //get filename with extension
-            $filenamewithextension = $request->file('profile_image')->getClientOriginalName();
-     
-            //get filename without extension
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-     
-            //get file extension
-            $extension = $request->file('profile_image')->getClientOriginalExtension();
-     
-            //filename to store
-            $filenametostore = $filename.'_'.time().'.'.$extension;
-     
-            //Upload File
-            $request->file('profile_image')->storeAs('public/profile_images', $filenametostore);
-            $request->file('profile_image')->storeAs('public/profile_images/thumbnail', $filenametostore);
-     
-            //Resize image here
-            $thumbnailpath = public_path('storage/profile_images/thumbnail/'.$filenametostore);
-            $img = Image::make($thumbnailpath)->resize(400, 400, function($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save($thumbnailpath);
-     
-            return 'wena. la hiciste';
-        }
-
+        $product = Product::find($request->id);
+        echo $product;        
+        $product->update($request->all());
     }
 
     /**
@@ -300,8 +241,27 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $post = Product::find($id);
+
+        //Big images
+        File::delete(public_path('items_img/'.$post->img1));
+        File::delete(public_path('items_img/'.$post->img2));
+        File::delete(public_path('items_img/'.$post->img3));
+        File::delete(public_path('items_img/'.$post->img4));
+
+        
+ 
+        //Child images
+        File::delete(public_path('items_img/thumb/'.$post->img1));
+        File::delete(public_path('items_img/thumb/'.$post->img2));
+        File::delete(public_path('items_img/thumb/'.$post->img3));
+        File::delete(public_path('items_img/thumb/'.$post->img4));
+
+        
+
+        $post->delete();
+
     }
 }

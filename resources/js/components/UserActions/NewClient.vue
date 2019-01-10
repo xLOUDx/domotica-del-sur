@@ -1,7 +1,56 @@
 <template>
 <div class="container">
 
+        <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Nuevo cliente</div>
+                <div class="card-body" style="align-text:center;">
 
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nombre</label>
+                    <input type="text" class="form-control" v-model="client.name" placeholder="Ejemplo: Pedro Gonzales Reyes" rows="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" v-model="client.email" placeholder="Ejemplo: preyes@mail.com" rows="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Password</label>
+                    <input type="password" class="form-control" v-model="client.password" rows="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Rut</label>
+                    <input type="text" class="form-control" v-model="client.rut" placeholder="Ejemplo: 11.111.111-1" rows="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Dirección</label>
+                    <input type="text" class="form-control" v-model="client.address" placeholder="Ejemplo: P. SHERMAN, CALLE WALLABY 42, SYDNEY" rows="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Empresa</label>
+                    <input type="text" class="form-control" v-model="client.company" placeholder="Ejemplo: Fierros san juan" rows="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Rut Empresa</label>
+                    <input type="text" class="form-control" v-model="client.companyRut" placeholder="Ejemplo: 1.111.111-1" rows="3" />
+                </div>
+            
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Descuento en %</label>
+                    <input class="form-control" v-model="client.discount" placeholder="Ejemplo: 0.25" rows="3" />
+                </div> <hr>
+                    <button class="btn btn-success" @click="newClient">Guardar</button>
+                </div>
+            </div> 
+        </div>
+        </div> <br>
 
 </div>
 </template>
@@ -10,37 +59,60 @@
 export default {
     data(){
         return{
-            data: {
-                item: ''
+            client: {
+                name: '',
+                rut: '',
+                email: '',
+                address: '',
+                company: '',
+                companyRut: '',
+                discount: '',
+                password: ''
             }
         }
     },
     methods: {
-        poto(){
-            axios.post('/poto')
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        },
-        pota(){
-            axios.post ('/algo', this.data)
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        },
-        imageChanged(){
-            var fileReader = new FileReader();
-                fileReader.readAsDataURL(event.target.files[0])
-                fileReader.onload = (event) => {
-                this.item = event.target.result
+        newClient(){
+
+        const toast = this.$swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        let validates = true;
+
+        for (var it in this.client) {
+            if (this.client[it] == ''){
+                validates = false;
             }
-            
+        }
+
+        if( validates == false ){
+            toast({
+                type: 'warning',
+                title: 'Complete TODOS los campos'
+            });
+        } else {
+            axios.post('/clients', this.client)
+                .then((response) => {
+                    this.client = [];
+                    console.log( response.data );
+                    
+                        toast({
+                            type: 'success',
+                            title: 'Cliente agregado con exito!'
+                        });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast({
+                        type: 'error',
+                        title: 'Algo salió mal'
+                    });
+                })
+        }
         }
     }
 }

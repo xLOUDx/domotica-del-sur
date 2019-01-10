@@ -34,7 +34,7 @@
           <tbody>
             <tr v-for="product in productAdd">
               <th scope="row">{{ product.model }}</th>
-              <td>${{ product.price }}</td>
+              <td>${{ product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
               <td>{{ product.count }}</td>
               <td>${{ getTotal(product.count, product.price) }}</td>
               <td>
@@ -108,6 +108,7 @@ export default {
     
       if(exist == true){
         let foundIndex = this.productAdd.findIndex(x => x.model == data.model);
+        
         let cantidad = {
           count: this.productAdd[foundIndex].count + 1,
           model: this.productAdd[foundIndex].model,
@@ -121,7 +122,7 @@ export default {
         let newProduct = {
           count: data.count,
           model: data.model,
-          price: data.price,
+          price:  data.price,
         }
 
         this.productAdd.push(newProduct);
@@ -135,8 +136,11 @@ export default {
     for(var i = 0; i < this.productAdd.length; i++){
       total = total + (this.productAdd[i].count * this.productAdd[i].price) 
     }
-    this.totalPrice = total;
-
+    let valor = total;
+    valor = valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    console.log(valor);
+    this.totalPrice = valor;  
+    
   },
   methods:{
     quit(model, count){
@@ -148,7 +152,7 @@ export default {
     },
     getTotal(cant, price){
       let total = cant * price;
-      return total;
+      return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     getPay(){    
       this.status = "<i class='fa fa-spinner fa-spin '></i> Procesando..."

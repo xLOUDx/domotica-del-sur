@@ -21,9 +21,13 @@ Vue.component('shop-finish', require('./components/Shop/ShopFinish.vue'));
 
 import ItemDetail from './components/Shop/ItemDetailComponent.vue';
 import indexShop from './components/Shop/IndexShopComponent.vue';
-import NewItem from './components/UserActions/NewItem.vue';
+import NewItem from './components/UserActions/Products/NewItem.vue';
+import AllItems from './components/UserActions/Products/AllItems.vue';
+import EditItem from './components/UserActions/Products/EditItem.vue';
 import NewClient from './components/UserActions/NewClient.vue';
-import Transactions from './components/UserActions/Transactions.vue';
+import Transactions from './components/UserActions/Sales/Transactions.vue';
+import NewSale from './components/UserActions/Sales/NewSale.vue';
+
 
 
 
@@ -31,7 +35,10 @@ const routes = [
     { name: 'indexShop', path: '/', component: indexShop },
     { name: 'ItemDetail', path: '/item/:id', component: ItemDetail, props: true},
     { name: 'NewItem', path: '/user/new/item', component: NewItem },
+    { name: 'AllItems', path: '/user/all/item', component: AllItems },
+    { name: 'EditItem', path: '/user/edit/item/:id', component: EditItem, props: true  },
     { name: 'NewClient', path: '/user/new/client', component: NewClient },
+    { name: 'NewSale', path: '/user/new/sale', component: NewSale },
     { name: 'Transactions', path: '/user/new/transactions', component: Transactions }
 
 ];
