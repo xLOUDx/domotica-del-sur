@@ -9,27 +9,27 @@
                 <div class="card-body" style="align-text:center;">
                 <!-- <form> -->
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Modelo</label>
+                    <h5 for="exampleInputEmail1">Modelo</h5>
                     <input placeholder="Ejemplo: ASP-8118" v-model="item.model" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Descripción</label>
+                    <h5 for="exampleInputEmail1">Descripción</h5>
                     <textarea placeholder="Descripción breve" v-model="item.description" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Ficha técnica</label>
+                    <h5 for="exampleInputEmail1">Ficha técnica</h5>
                     <textarea placeholder="Detalles separados por guión (-)" v-model="item.data_sheet" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Precio</label>
+                    <h5 for="exampleInputEmail1">Precio</h5>
                     <input placeholder="Ejemplo: 63000" v-model="item.price" type="number" class="form-control">
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Stock</label>
+                <!--<div class="form-group">
+                    <h5 for="exampleInputEmail1">Stock</h5>
                     <input placeholder="Ejemplo: 20" v-model="item.stock" type="number" class="form-control">
-                </div>
+                </div> -->
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Tipo</label>
+                    <h5 for="exampleInputEmail1">Tipo</h5>
                     <input placeholder="Ejemplo: IP - HD - DOMO" v-model="item.type" type="text" class="form-control">
                 </div>
 
@@ -99,7 +99,7 @@ export default {
                 this.item.description = response.data[0].description,
                 this.item.data_sheet = response.data[0].data_sheet,
                 this.item.price = response.data[0].price,
-                this.item.stock = response.data[0].stock,
+                //this.item.stock = response.data[0].stock,
                 //this.item.internal_code = response.data[0].internal_code,
                 this.item.type = response.data[0].type,
                 this.item.img1 = response.data[0].img1,

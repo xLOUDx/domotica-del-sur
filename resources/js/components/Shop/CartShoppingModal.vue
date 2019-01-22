@@ -47,7 +47,7 @@
               <td></td>
               <td></td>
               <td class="font-weight-bold">Monto final: </td>
-              <td class="font-weight-bold h5"> {{ this.totalPrice }} </td>
+              <td class="font-weight-bold h5"> {{ this.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} </td>
               <td></td>
 
             </tr>
@@ -137,8 +137,8 @@ export default {
       total = total + (this.productAdd[i].count * this.productAdd[i].price) 
     }
     let valor = total;
-    valor = valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-    console.log(valor);
+    //valor = valor;
+    //console.log(valor);
     this.totalPrice = valor;  
     
   },
@@ -160,7 +160,6 @@ export default {
 
       axios.post('/redirect', { total: this.totalPrice, product: this.productAdd })
         .then((response) => {
-          console.log(response.data);
           this.url = response.data.url;
           this.token = response.data.token;
         }) 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Transaction;
+use App\Intermediary;
 use Freshwork\Transbank\CertificationBagFactory;
 use Freshwork\Transbank\TransbankServiceFactory;
 use Freshwork\Transbank\RedirectorHelper;
@@ -40,6 +41,8 @@ class WebPayController extends Controller
         $initTransactionData->ammount = $amount;
         $initTransactionData->transactiontoken = $response->token;
         $initTransactionData->save();
+
+        $_SESSION['lastid'] = $initTransactionData->id;
 
         //Respuesta modo json a vuejs. Link y token
         //Vue maneja esto por su parte con un formulario
@@ -99,9 +102,20 @@ class WebPayController extends Controller
 
         $data = Transaction::where('transactiontoken', $_POST['token_ws'])->get();
         if($approved == '0'){
-            //$userResponse = true;
             $userResponse = $data;
             $userResponse['products'] = $_SESSION['products'];
+
+            foreach( $_SESSION['products'] as $key=>$item ){
+                $algo = new Intermediary;
+                $algo->id = $_SESSION['lastid'];
+                $algo->model = $item['model'];
+                $algo->price = $item['price'];
+                $algo->quantity = $item['count'];
+                $algo->discount = '0';
+                $algo->total = number_format($item['price'] * $item['count'], 0, ',', '.');
+                $algo->save();
+            } 
+
         } else{
             //En caso contrario se da respuesta fallida
             $userResponse = $data;

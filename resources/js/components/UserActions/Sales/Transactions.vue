@@ -23,10 +23,10 @@
                 <td>{{ tran.payment }}</td>
                 <td style="background-color:#DAF7A6;">{{ tran.approved }}</td>
                 <td>{{ tran.sharesNumber }}</td>
-                <td style="background-color:#FFC300;">$ {{ tran.ammount }}</td>
+                <td style="background-color:#FFC300;">$ {{ tran.ammount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
                 <td>{{ tran.buyorder }}</td>
                 <td>{{ tran.created_at }}</td>
-                <th> <a href="#">Ver detalles...</a> </th>
+                <th> <button @click="getDetails(tran.id, tran.ammount)" type="button" class="btn btn-link">Ver detalles...</button> </th>
             </tr>
         </tbody>
         </table>
@@ -44,14 +44,18 @@ export default {
         }
     },
     created(){
-        axios.get('/transactions')
+        axios.post('/sales', { type: 'transaction' })
             .then((response) => {
-                this.transactions = response.data;
-                //console.log(response.data);
+                this.transactions = response.data
             })
             .catch((error) => {
                 console.log(error);
             })
+    },
+    methods: {
+        getDetails(id, monto){
+            this.$router.push({ name: 'SalesDetail', params: { id: id, total: monto }});
+        }
     }
 }
 </script>

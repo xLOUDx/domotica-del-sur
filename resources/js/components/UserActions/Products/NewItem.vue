@@ -9,51 +9,51 @@
                 <div class="card-body" style="align-text:center;">
                 <!-- <form> -->
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Modelo</label>
+                    <h5 for="exampleInputEmail1">Modelo</h5>
                     <input placeholder="Ejemplo: ASP-8118" v-model="item.model" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Descripción</label>
+                    <h5 for="exampleInputEmail1">Descripción</h5>
                     <textarea placeholder="Descripción breve" v-model="item.description" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Ficha técnica</label>
+                    <h5 for="exampleInputEmail1">Ficha técnica</h5>
                     <textarea placeholder="Detalles separados por guión (-)" v-model="item.data_sheet" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Precio</label>
+                    <h5 for="exampleInputEmail1">Precio</h5>
                     <input placeholder="Ejemplo: 63000" v-model="item.price" type="number" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Stock</label>
+                    <h5 for="exampleInputEmail1">Stock</h5>
                     <input placeholder="Ejemplo: 20" v-model="item.stock" type="number" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Código interno</label>
+                    <h5 for="exampleInputEmail1">Código interno</h5>
                     <input placeholder="Ejemplo: ASP-8118" v-model="item.internal_code" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Tipo</label>
+                    <h5 for="exampleInputEmail1">Tipo</h5>
                     <input placeholder="Ejemplo: IP - HD - DOMO" v-model="item.type" type="text" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">Imagen 1</label>
+                    <h5 for="exampleFormControlFile1">Imagen 1</h5>
                     <input type="file" class="form-control-file" @change="(event) => imageChanged(event, 1)">
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">Imagen 2</label>
+                    <h5 for="exampleFormControlFile1">Imagen 2</h5>
                     <input type="file" class="form-control-file" @change="(event) => imageChanged(event, 2)">
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">Imagen 3</label>
+                    <h5 for="exampleFormControlFile1">Imagen 3</h5>
                     <input type="file" class="form-control-file" @change="(event) => imageChanged(event, 3)">
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">Imagen 4</label>
+                    <h5 for="exampleFormControlFile1">Imagen 4</h5>
                     <input type="file" class="form-control-file" @change="(event) => imageChanged(event, 4)">
                 </div>
                 <hr>

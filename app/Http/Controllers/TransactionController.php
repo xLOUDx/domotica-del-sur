@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sale;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,19 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $products = Transaction::all();
+        $products = Transaction::all()->whereNotIn('transactiontoken', '0')->whereNotIn('authorizationcode', '');
         return $products;
+    }
+
+
+    public function getSales(Request $request){
+        if($request->type == 'sale'){
+            $products = Sale::all();
+            return $products;
+        } else {
+            $products = Transaction::all()->whereNotIn('transactiontoken', '0')->whereNotIn('authorizationcode', '');
+            return $products;   
+        }
     }
 
     /**

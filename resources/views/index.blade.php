@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Domótica del Sur ltda</title>
+  <link href="img/favicon.png" rel="icon">
+
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">

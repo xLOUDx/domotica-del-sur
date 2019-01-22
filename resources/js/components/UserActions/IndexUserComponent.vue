@@ -16,7 +16,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <router-link to='/user/new/item' class="dropdown-item">Agregar nuevo producto</router-link>        
                         <router-link to='/user/all/item' class="dropdown-item">Ver productos</router-link>        
-                        <a class="dropdown-item" href="#">Control de stock</a>
+                        <router-link to='/user/stock' class="dropdown-item">Control de stock</router-link>
                         </div>
                     </li>
 
@@ -36,10 +36,9 @@
                         Ventas
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <router-link to='/user/new/sale' class="dropdown-item">Ingresar venta</router-link>
-                        <a class="dropdown-item" href="#">Ver ventas</a>
-                        <router-link to='/user/new/transactions' class="dropdown-item"> Historial de transacciones </router-link>
-
+                            <router-link to='/user/new/sale' class="dropdown-item">Ingresar venta</router-link>
+                            <button class="dropdown-item btn btn-link" @click="getSales">Historial de ventas</button>
+                            <router-link to="/user/new/transactions" class="dropdown-item">Historial de transacciones</router-link>
                         </div>
                     </li>
 
@@ -55,6 +54,15 @@
 export default {
     created(){
         this.$router.push({ path: '/user' })
+    },
+    methods:{
+        getTransaction(){
+            this.$router.push({ name: 'Sales', params: { type: 'transaction' }});  
+                      
+        },
+        getSales(){
+            this.$router.push({ name: 'Sales', params: { type: 'sale' }});
+        }
     }
 }
 </script>

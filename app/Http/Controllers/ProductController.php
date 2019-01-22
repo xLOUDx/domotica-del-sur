@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Sale;
 use App\Product;
+use App\Stock;
+use Image;
+use App\Transaction;
 use App\Intermediary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Image;
 use Illuminate\Support\Facades\File;
 
 
@@ -210,6 +213,48 @@ class ProductController extends Controller
        return $item;
     }
 
+    public function getDetails(Request $request){
+        $details = Intermediary::where('id', $request->id)->get();
+        return $details;
+    }
+
+    public function saveSale(Request $request){
+        //$otro = Product::where('model', '555')->first();
+        //$otro->stock = $otro->stock - $item['number'];
+        //$otro->save();
+        //echo $otro;
+
+        $baseid = md5(microtime(). date('Y/m/d'));
+        $buyOrder = base_convert($baseid, 5, 9);
+
+        $sale = new Sale;
+        $sale->payment = $request->detail['payment'];
+        $sale->amount = $request->detail['total'];
+        $sale->buyorder = $buyOrder;
+        $sale->client = $request->detail['client'];
+        $sale->rutclient = $request->detail['rutclient'];
+        $sale->company = $request->detail['company'];
+        $sale->rutcompany = $request->detail['rutcompany'];
+        $sale->discount = $request->detail['discount'];
+        $sale->save();
+
+        foreach( $request->items as $key=>$item ){
+            $algo = new Intermediary;
+            $algo->id = $sale->id;
+            $algo->model = $item['name'];   
+            $algo->price = $item['price'];
+            $algo->quantity = $item['number'];
+            $algo->discount = $request->detail['discount'];
+            $algo->total = $item['total'];
+            $algo->save();
+
+            $otro = Product::where('model', $item['name'])->first();
+            $otro->stock = $otro->stock - $item['number'];
+            $otro->save();
+        } 
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -219,6 +264,18 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
+    }
+
+    public function addStock(Request $request){
+        $product = Product::find($request->id);
+        $product->stock = $product->stock + $request->number;
+        $product->save();
+    }
+
+    public function deleteStock(Request $request){
+        $product = Product::find($request->id);
+        $product->stock = $product->stock - $request->number;
+        $product->save();
     }
 
     /**
@@ -231,7 +288,6 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $product = Product::find($request->id);
-        echo $product;        
         $product->update($request->all());
     }
 

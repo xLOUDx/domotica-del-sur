@@ -16,7 +16,7 @@
         <tr v-for="it in products">
             <th scope="row">{{ it.id }}</th>
             <td>{{ it.model }}</td>
-            <td>{{ it.price }}</td>
+            <td>{{ it.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
             <td>{{ it.stock }}</td>
             <td>{{ it.type }}</td>
             <td>
