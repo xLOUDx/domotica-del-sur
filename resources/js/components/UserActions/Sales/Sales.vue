@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
 
         <table v-if="this.tipo == 'transaction'" class="table table-hover table-responsive-sm">
         <thead>
@@ -27,7 +27,7 @@
         <table v-if="this.tipo == 'sale'" class="table table-hover table-responsive-sm">
         <thead>
             <tr>
-                <th class="table-primary" scope="col">ID</th>
+                <th class="table-primary" scope="col">Orden de compra</th>
                 <th class="table-primary" scope="col">Cliente</th>
                 <th class="table-primary" scope="col">Rut de cliente</th>
                 <th class="table-primary" scope="col">Empresa</th>
@@ -35,12 +35,25 @@
                 <th class="table-primary" scope="col">Modo de pago</th>
                 <th class="table-primary" scope="col">Monto</th>
                 <th class="table-primary" scope="col">Descuento</th>
+                <th class="table-primary" scope="col">Fecha</th>
                 <th class="table-primary" scope="col">Detalles</th>
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td> <input class="form-control" type="text"> </td>
+                <td> <input class="form-control" type="text"> </td>
+                <td> <input class="form-control" type="text"> </td>
+                <td> <input class="form-control" type="text"> </td>
+                <td> <input class="form-control" type="text"> </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td> <input class="form-control" type="text"> </td>
+                <td></td>
+            </tr> 
             <tr v-for="sal in sales">
-                <th> {{ sal.id }} </th>
+                <th>{{ sal.buyorder }}</th>
                 <td>{{ sal.client }}</td>
                 <td>{{ sal.rutclient }}</td>
                 <td>{{ sal.company }}</td>
@@ -48,6 +61,7 @@
                 <td>{{ sal.payment }}</td>
                 <td>{{ sal.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
                 <td>{{ sal.discount }}</td>
+                <td>{{ moment(sal.created_at).format('l') }}</td>
                 <td> <button class="btn btn-link" @click="getDetails(sal.id, sal.amount)">Ver detales</button> </td>
             </tr>
         </tbody>
@@ -57,6 +71,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
     props:['type'],
     data(){
@@ -90,10 +106,18 @@ export default {
             axios.post('/sales', { type: this.type })
                 .then((response) => {
                     this.sales = response.data
+                   //console.log( response.data );
                 })
                 .catch((error) => {
                     console.log(error);
                 })
+        },
+        moment(date) {
+            moment.locale('es');
+            return moment(date);
+        },
+        filterTable(){
+
         }
     }
 }

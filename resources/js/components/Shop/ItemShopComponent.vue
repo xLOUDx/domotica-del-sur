@@ -46,7 +46,7 @@ export default {
     this.image = './items_img/thumb/' + this.$props.prod.img1;
     let valor = this.$props.prod.price;
     valor = valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-    console.log(valor);
+    //console.log(valor);
     this.price = valor;  
     
   },

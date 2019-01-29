@@ -114,7 +114,7 @@ export default {
         updateProduct(){            
             axios.put(`/items/${this.id}`, this.item)
                 .then((response) => {
-                    console.log(response.data);
+                    //console.log(response.data);
                 })
                 .catch((error) => {
                     console.log(error);

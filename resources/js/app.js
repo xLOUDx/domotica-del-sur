@@ -30,6 +30,8 @@ import Sales from './components/UserActions/Sales/Sales.vue';
 import SalesDetail from './components/UserActions/Sales/SalesDetail.vue';
 import ControlStock from './components/UserActions/Products/ControlStock.vue';
 import StockDetail from './components/UserActions/Products/StockDetail.vue';
+import AllClients from './components/UserActions/Clients/AllClients.vue';
+
 
 
 
@@ -45,6 +47,7 @@ const routes = [
     { name: 'Sales', path: '/user/sales/:type', component: Sales, props: true },
     { name: 'StockDetail', path: '/user/product/detail/:id', component: StockDetail, props: true },
     { name: 'ControlStock', path: '/user/stock', component: ControlStock },
+    { name: 'AllClients', path: '/user/clients', component: AllClients },
     { name: 'Transactions', path: '/user/new/transactions', component: Transactions }
 
 ];

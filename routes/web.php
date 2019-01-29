@@ -16,8 +16,10 @@ Route::post('/savesale', 'ProductController@saveSale');
 Route::post('/sales', 'TransactionController@getSales');
 Route::post('/details', 'ProductController@getDetails');
 
-Route::post('/addstock', 'ProductController@addStock');
 Route::post('/deletestock', 'ProductController@deleteStock');
+Route::post('/stock', 'ProductController@getStock');
+Route::post('/addstock', 'ProductController@addStock');
+Route::post('/createuser', 'RegisterController@create');
 
 
 Route::resource('/items', 'ProductController');
@@ -31,3 +33,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([
+    'middleware' => ['auth','isAdmin'],
+], function() {
+
+    Route::post('/register');
+});

@@ -7,7 +7,7 @@
             <th class="table-primary" scope="col">ID</th>
             <th class="table-primary" scope="col">Código de autorización</th>
             <th class="table-primary" scope="col">Metodo de pago</th>
-            <th class="table-primary" scope="col">Aprovada</th>
+            <th class="table-primary" scope="col">Aprobado</th>
             <th class="table-primary" scope="col">Cuotas</th>
             <th class="table-primary" scope="col">Monto</th>
             <th class="table-primary" scope="col">Orden de compra</th>
@@ -25,7 +25,7 @@
                 <td>{{ tran.sharesNumber }}</td>
                 <td style="background-color:#FFC300;">$ {{ tran.ammount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
                 <td>{{ tran.buyorder }}</td>
-                <td>{{ tran.created_at }}</td>
+                <td>{{ moment(tran.created_at).format('l') }}</td>
                 <th> <button @click="getDetails(tran.id, tran.ammount)" type="button" class="btn btn-link">Ver detalles...</button> </th>
             </tr>
         </tbody>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
     data(){
         return{
@@ -55,6 +57,10 @@ export default {
     methods: {
         getDetails(id, monto){
             this.$router.push({ name: 'SalesDetail', params: { id: id, total: monto }});
+        },
+        moment(date) {
+            moment.locale('es');
+            return moment(date);
         }
     }
 }

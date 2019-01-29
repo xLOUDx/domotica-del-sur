@@ -95,13 +95,13 @@ export default {
         }
     },
     created(){
-        console.log(JSON.parse(this.$props.resp))
+        //console.log(JSON.parse(this.$props.resp))
 
         let algo = JSON.parse(this.$props.resp);
         this.respuesta = algo[0];
         this.items = algo['products'];
 
-        console.log(this.respuesta);
+        //console.log(this.respuesta);
         if(this.items.length < 0 ){
             this.$swal(
                 'Falló!',

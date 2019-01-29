@@ -15,7 +15,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Product::all();
+        $clients = Client::all();
         return $clients;
     }
 
@@ -27,6 +27,10 @@ class ClientController extends Controller
     public function create()
     {
         //
+    }
+
+    public function initSession(Request $request){
+        
     }
 
     public function getHome(){
@@ -62,8 +66,6 @@ class ClientController extends Controller
         $newClient->discount = $request->discount;
         $newClient->password =  Hash::make($request->password);
         $newClient->save();
-
-
     }
 
     /**

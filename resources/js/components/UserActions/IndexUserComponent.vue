@@ -27,7 +27,6 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <router-link to='/user/new/client' class="dropdown-item">Nuevo cliente</router-link>
                         <a class="dropdown-item" href="#">Ver clientes</a>
-                        <a class="dropdown-item" href="#">Editar cliente</a>
                         </div>
                     </li>
 

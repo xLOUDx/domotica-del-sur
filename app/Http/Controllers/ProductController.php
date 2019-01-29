@@ -145,8 +145,15 @@ class ProductController extends Controller
         $item->img2 = $filename2; 
         $item->img3 = $filename3; 
         $item->img4 = $filename4; 
-
         $item->save();
+
+        $stock = new Stock;
+        $stock->id = $item->id;
+        //$stock->before = '0';
+        $stock->enter = $request->stock;
+        //$stock->outsales = '0';
+        $stock->total = $request->stock;
+        $stock->save();
 
         //Minimizarlas y guardarlas
 
@@ -219,11 +226,27 @@ class ProductController extends Controller
     }
 
     public function saveSale(Request $request){
-        //$otro = Product::where('model', '555')->first();
-        //$otro->stock = $otro->stock - $item['number'];
-        //$otro->save();
-        //echo $otro;
+        $have = [];
+        
+        foreach( $request->items as $key=>$item ){
+            $hay = Product::where('model', $item['name'])->first();
 
+            if( $hay->stock >= 0 && $hay->stock - $item['number'] >= 0 ){
+                array_push($have, 'true');
+            } else {
+                array_push($have, 'false');
+            }
+        }
+
+        $nada = 'true';
+
+        foreach ($have as $key => $value) {
+            if($value == 'false'){
+                $nada = 'false';
+            }
+        }
+        
+        if( $nada == 'true' ){
         $baseid = md5(microtime(). date('Y/m/d'));
         $buyOrder = base_convert($baseid, 5, 9);
 
@@ -238,20 +261,34 @@ class ProductController extends Controller
         $sale->discount = $request->detail['discount'];
         $sale->save();
 
-        foreach( $request->items as $key=>$item ){
-            $algo = new Intermediary;
-            $algo->id = $sale->id;
-            $algo->model = $item['name'];   
-            $algo->price = $item['price'];
-            $algo->quantity = $item['number'];
-            $algo->discount = $request->detail['discount'];
-            $algo->total = $item['total'];
-            $algo->save();
+            foreach( $request->items as $key=>$item ){
+                $algo = new Intermediary;
+                $algo->id = $sale->id;
+                $algo->model = $item['name'];   
+                $algo->price = $item['price'];
+                $algo->quantity = $item['number'];
+                $algo->discount = $request->detail['discount'];
+                $algo->total = $item['total'];
+                $algo->save();
 
-            $otro = Product::where('model', $item['name'])->first();
-            $otro->stock = $otro->stock - $item['number'];
-            $otro->save();
-        } 
+                $otro = Product::where('model', $item['name'])->first();
+                $otro->stock = $otro->stock - $item['number'];
+                $otro->save();
+
+                $voila = new Stock;
+                $voila->id = $otro->id;
+                $voila->outsales = $item['number'];
+                $voila->save();
+
+            }  
+                  
+        $data = 'true';
+        return $data;
+
+        } else {
+            $data = 'false';
+            return $data;
+        }
     }
 
 
@@ -267,10 +304,32 @@ class ProductController extends Controller
     }
 
     public function addStock(Request $request){
+        $algo = Stock::where('id', $request->id)->orderBy('created_at', 'desc')->first();
+
+        $stock = new Stock;
+        $stock->id = $request->id;
+        $stock->before = $algo->total;
+        $stock->enter = $request->numbers['enter'];
+        $stock->outsales = $request->numbers['outsale'] ;
+        $stock->total = $algo->total + ($request->numbers['enter'] - $request->numbers['outsale']);
+        $stock->save(); 
+
+        $prod = Product::find($request->id);
+        $prod->stock = $algo->total + ($request->numbers['enter'] - $request->numbers['outsale']);
+        $prod->save();
+        //return $request->numbers['enter'];
+    }
+
+    public function getStock(Request $request){
+        return Stock::where('id', $request->id)->orderBy('created_at', 'desc')->get();
+        return $stock;
+    }
+
+    /*public function addStock(Request $request){
         $product = Product::find($request->id);
         $product->stock = $product->stock + $request->number;
         $product->save();
-    }
+    }*/
 
     public function deleteStock(Request $request){
         $product = Product::find($request->id);

@@ -98,7 +98,7 @@ export default {
             axios.post('/clients', this.client)
                 .then((response) => {
                     this.client = [];
-                    console.log( response.data );
+                    //console.log( response.data );
                     
                         toast({
                             type: 'success',

@@ -45,9 +45,7 @@ export default {
         }
     },
     created(){
-        axios.get('/items')
-            .then((response) => this.products = response.data)
-            .catch((error) => console.log(error));
+        this.getItems();
     },
     methods: {
         destroy(id){
@@ -64,6 +62,8 @@ export default {
                         type: 'success',
                         title: 'Eliminado correctamente'
                     });
+                this.getItems();
+
                 })
                 .catch((error) => {
                     console.log(error);
@@ -75,6 +75,11 @@ export default {
         },
         update(id){
             this.$router.push({ name: 'EditItem', params: { id: id }});
+        },
+        getItems(){
+            axios.get('/items')
+                .then((response) => this.products = response.data)
+                .catch((error) => console.log(error));
         }
     }
 }

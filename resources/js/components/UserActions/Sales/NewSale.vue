@@ -10,19 +10,19 @@
                 <!-- <form> -->
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Nombre del cliente</h5>
-                    <input placeholder="Ejemplo: 63000" v-model="general.client" type="text" class="form-control">
+                    <input placeholder="Ejemplo: Juan perez" v-model="general.client" type="text" class="form-control">
                 </div>           
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Rut cliente</h5>
-                    <input placeholder="Ejemplo: 20" v-model="general.rutclient" type="text" class="form-control">
+                    <input placeholder="Ejemplo: 11.111.111-1" v-model="general.rutclient" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Empresa</h5>
-                    <input placeholder="Ejemplo: 63000" v-model="general.company" type="text" class="form-control">
+                    <input placeholder="Ejemplo: Fierros San Juan" v-model="general.company" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Rut empresa</h5>
-                    <input placeholder="Ejemplo: 63000" v-model="general.rutcompany" type="text" class="form-control">
+                    <input placeholder="Ejemplo: 11.111.111-1" v-model="general.rutcompany" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Modo de pago</h5>
@@ -31,10 +31,11 @@
                         {{ general.payment }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" @click="getPayMode(1)">Efectivo</a>
-                        <a class="dropdown-item" @click="getPayMode(2)">Tarjeta</a>
-                        <a class="dropdown-item" @click="getPayMode(3)">Transferencia</a>
-                        <a class="dropdown-item" @click="getPayMode(4)">Otro</a>
+                        <button class="dropdown-item" @click="getPayMode(1)">Efectivo</button>
+                        <button class="dropdown-item" @click="getPayMode(2)">Tarjeta</button>
+                        <button class="dropdown-item" @click="getPayMode(3)">Transferencia</button>
+                        <button class="dropdown-item" @click="getPayMode(4)">Cheque</button>
+                        <button class="dropdown-item" @click="getPayMode(5)">Otro</button>
                     </div>
                     </div>
                 </div>
@@ -141,7 +142,7 @@ export default {
             timer: 3000
         });
 
-        let validates = true;
+        /*let validates = true;
 
         for (var it in this.general) {
             if (this.general[it] == ''){
@@ -160,34 +161,43 @@ export default {
                     type: 'warning',
                     title: 'Complete TODOS los campos'
                 });
-          } else {
+          } else { */
               this.general['discount'] = this.discount;
 
             axios.post('/savesale', { items: this.value, detail: this.general })
                 .then((response) => {
-                    this.value = [];
-                    this.discount = '';
-                    this.general = {
-                        payment: 'Efectivo',
-                        total: 0,
-                        nameClient: '',
-                        rutClient: ''
-                    };
-                    
-                    toast({
-                        type: 'success',
-                        title: 'Compra agregada con éxito'
-                    });
-                    console.log( response.data );
+
+                    if( response.data == false ){
+                        toast({
+                            type: 'error',
+                            title: 'No hay stock, por favor revise el inventario.'
+                        });
+                        
+                    } else{
+                        this.value = [];
+                        this.discount = '';
+                        this.general = {
+                            payment: 'Efectivo',
+                            total: 0,
+                            nameClient: '',
+                            rutClient: ''
+                        };
+                        
+                        toast({
+                            type: 'success',
+                            title: 'Compra agregada con éxito'
+                        });
+                    }   
+                    //console.log(response.data);
                     
                 })
                 .catch((error) => {
                     toast({
                         type: 'error',
-                        title: 'Algo salió mal'
+                        title: 'Algo salió mal. Revise los datos ingresados'
                     });
                 });
-          }
+          //}
       },
       getPayMode(tipo){
         if(tipo == '1'){
@@ -200,6 +210,9 @@ export default {
            this.general.payment = 'Transferencia';   
         }
         if(tipo == '4'){
+           this.general.payment = 'Cheque';   
+        } 
+        if(tipo == '5'){
            this.general.payment = 'Otro';   
         }
       }

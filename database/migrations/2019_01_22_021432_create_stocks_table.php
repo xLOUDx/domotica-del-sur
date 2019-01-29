@@ -14,9 +14,11 @@ class CreateStocksTable extends Migration
     public function up()
     {
         Schema::create('stocks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('enter')->nullable(true);
-            $table->integer('outsales')->nullable(true);
+            $table->integer('id');
+            $table->integer('before')->default('0');
+            $table->integer('enter')->default('0');
+            $table->integer('outsales')->default('0');
+            $table->integer('total')->default('0');
             $table->timestamps();
         });
     }
