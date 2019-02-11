@@ -26,7 +26,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <router-link to='/user/new/client' class="dropdown-item">Nuevo cliente</router-link>
-                        <a class="dropdown-item" href="#">Ver clientes</a>
+                        <router-link to="/user/clients" class="dropdown-item">Ver clientes</router-link>
                         </div>
                     </li>
 
@@ -44,7 +44,6 @@
                 </ul>
             </div>
         </nav> <br>
-
             <router-view> </router-view>
     </div>
 </template>

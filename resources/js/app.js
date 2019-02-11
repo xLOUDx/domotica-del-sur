@@ -23,7 +23,7 @@ import indexShop from './components/Shop/IndexShopComponent.vue';
 import NewItem from './components/UserActions/Products/NewItem.vue';
 import AllItems from './components/UserActions/Products/AllItems.vue';
 import EditItem from './components/UserActions/Products/EditItem.vue';
-import NewClient from './components/UserActions/NewClient.vue';
+import NewClient from './components/UserActions/Clients/NewClient.vue';
 import Transactions from './components/UserActions/Sales/Transactions.vue';
 import NewSale from './components/UserActions/Sales/NewSale.vue';
 import Sales from './components/UserActions/Sales/Sales.vue';
@@ -31,6 +31,8 @@ import SalesDetail from './components/UserActions/Sales/SalesDetail.vue';
 import ControlStock from './components/UserActions/Products/ControlStock.vue';
 import StockDetail from './components/UserActions/Products/StockDetail.vue';
 import AllClients from './components/UserActions/Clients/AllClients.vue';
+import EditClient from './components/UserActions/Clients/EditClient.vue';
+import ShowDataClient from './components/UserActions/Clients/ShowDataClient.vue';
 
 
 
@@ -47,6 +49,8 @@ const routes = [
     { name: 'Sales', path: '/user/sales/:type', component: Sales, props: true },
     { name: 'StockDetail', path: '/user/product/detail/:id', component: StockDetail, props: true },
     { name: 'ControlStock', path: '/user/stock', component: ControlStock },
+    { name: 'EditClient', path: '/user/edit/:id', component: EditClient, props: true },
+    { name: 'ShowDataClient', path: '/client/data/:id', component: ShowDataClient, props: true },
     { name: 'AllClients', path: '/user/clients', component: AllClients },
     { name: 'Transactions', path: '/user/new/transactions', component: Transactions }
 

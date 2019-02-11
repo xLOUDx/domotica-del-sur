@@ -92,7 +92,8 @@ export default {
                 img4: ''
             },
             status: 'Guardar',
-            disb: false
+            disb: false,
+            validated: true
         }
     },
     created(){        
@@ -117,18 +118,19 @@ export default {
             this.status = "<i class='fa fa-spinner fa-spin '></i> Procesando..."
             this.disb = true;
 
-            let validates = true;
+            //let validates = true;
 
             for (var it in this.item) {
                 if (this.item[it] == ''){
-                    validates = false;
+                    this.validates = false;
                 }
             }
 
-            if( validates == false ){
+            if( this.validates == false ){
 
                 this.status = "Guardar"
                 this.disb = false;
+                this.validates = true;
 
                 toast({
                     type: 'warning',
@@ -141,21 +143,33 @@ export default {
                         //console.log(response.data);
                         this.status = "Guardar"
                         this.disb = false;
+                        this.validates = false;
 
                         toast({
                             type: 'success',
                             title: 'Producto creado correctamente'
                         });
 
-                        this.item = [];
-                        window.location.reload();
+                                    
+                        this.item.model = '';
+                        this.item.description = '';
+                        this.item.data_sheet = '';
+                        this.item.price = '';
+                        this.item.stock = '';
+                        this.item.internal_code = '';
+                        this.item.type = '';
+                        this.item.img1 = '';
+                        this.item.img2 = '';
+                        this.item.img3 = '';
+                        this.item.img4 = '';
+                    
                     })
                     .catch((error) => { 
                         toast({
                             type: 'error',
                             title: 'Algo salió mal'
                         });
-
+                        this.validates = false;
                         this.status = "Guardar"
                         this.disb = false;
                     });

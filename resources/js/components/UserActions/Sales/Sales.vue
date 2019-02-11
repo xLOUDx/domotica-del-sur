@@ -27,6 +27,7 @@
         <table v-if="this.tipo == 'sale'" class="table table-hover table-responsive-sm">
         <thead>
             <tr>
+                <th class="table-primary" scope="col">Vendedor</th>
                 <th class="table-primary" scope="col">Orden de compra</th>
                 <th class="table-primary" scope="col">Cliente</th>
                 <th class="table-primary" scope="col">Rut de cliente</th>
@@ -53,6 +54,7 @@
                 <td></td>
             </tr> 
             <tr v-for="sal in sales">
+                <th>{{ sal.seller }}</th>
                 <th>{{ sal.buyorder }}</th>
                 <td>{{ sal.client }}</td>
                 <td>{{ sal.rutclient }}</td>

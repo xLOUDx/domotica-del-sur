@@ -44,7 +44,15 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
+                                
+                                <input type="hidden" name="lastname" value="0" />
+                                <input type="hidden" name="rut" value="0" />
+                                <input type="hidden" name="address" value="0" />
+                                <input type="hidden" name="company" value="0" />
+                                <input type="hidden" name="company_rut" value="0" />
+                                <input type="hidden" name="discount" value="0" />
+                                <input type="hidden" name="privileges" value="0" />
+                                
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>

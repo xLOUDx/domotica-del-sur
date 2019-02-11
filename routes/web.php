@@ -19,7 +19,13 @@ Route::post('/details', 'ProductController@getDetails');
 Route::post('/deletestock', 'ProductController@deleteStock');
 Route::post('/stock', 'ProductController@getStock');
 Route::post('/addstock', 'ProductController@addStock');
-Route::post('/createuser', 'RegisterController@create');
+Route::post('/createuser', 'ClientController@createUser');
+Route::get('/getclients', 'ClientController@getClients');
+Route::post('/getclient', 'ClientController@getClient');
+Route::post('/updateclient', 'ClientController@updateClient');
+Route::post('/detailsclient', 'ClientController@detailsClient');
+
+
 
 
 Route::resource('/items', 'ProductController');
@@ -33,10 +39,3 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group([
-    'middleware' => ['auth','isAdmin'],
-], function() {
-
-    Route::post('/register');
-});

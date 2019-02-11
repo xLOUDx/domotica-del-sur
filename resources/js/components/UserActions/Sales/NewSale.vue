@@ -8,10 +8,22 @@
 
                 <div class="card-body" style="align-text:center;">
                 <!-- <form> -->
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <h5 for="exampleInputEmail1">Nombre del cliente</h5>
+                        <input placeholder="Ejemplo: Juan" v-model="general.client" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                    <div>
+                        <h5 class="typo__label">Clientes</h5>
+                        <multiselect v-model="value2" @input="this.putClient" :options="options2" placeholder="Seleccione..." label="name" track-by="name"></multiselect>
+                    </div>
+                    </div>
+                </div>     
                 <div class="form-group">
-                    <h5 for="exampleInputEmail1">Nombre del cliente</h5>
-                    <input placeholder="Ejemplo: Juan perez" v-model="general.client" type="text" class="form-control">
-                </div>           
+                    <h5 for="exampleInputEmail1">Apellido cliente</h5>
+                    <input placeholder="Ejemplo: Idalgo maldonado" v-model="general.client_lastname" type="text" class="form-control">
+                </div>      
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Rut cliente</h5>
                     <input placeholder="Ejemplo: 11.111.111-1" v-model="general.rutclient" type="text" class="form-control">
@@ -41,10 +53,10 @@
                 </div>
                 <div class="form-group">
                     <div>
-                    <h5 class="typo__label">Productos</h5>
-                    <multiselect v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Seleccione..." label="name" track-by="name" :preselect-first="false">
-                        <template slot="selection" @onclick="getProduct" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} Productos</span></template>
-                    </multiselect>
+                        <h5 class="typo__label">Productos</h5>
+                        <multiselect v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Seleccione..." label="name" track-by="name" :preselect-first="false">
+                            <template slot="selection" @onclick="getProduct" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} Productos</span></template>
+                        </multiselect>
                     </div>       
                 </div>
                 <div class="form-group">
@@ -98,21 +110,25 @@ export default {
     return {
         value: [],
         options: [],
+        options2: [],
+        value2: [],
         general: {
             payment: 'Efectivo',
             total: 0,
             client: '',
+            client_lastname: '',
             rutclient: '',
             company: '',
             rutcompany: ''
         },
-        discount: ''
+        discount: '',
+        aproved: true
     }
   },
   watch: {
-      value(hola){
+        value(hola){
           this.getTotal();
-      }
+        }
 
   },
   created(){
@@ -120,6 +136,21 @@ export default {
         .then((response) => {
             Object.values(response.data).forEach((key) => {
                 this.options.push({ name: `${key['model']}`, price: `${key['price']}`, number: 1 , total: 0 })
+            });
+        })
+        .catch((error) => console.log(error));
+
+    axios.get('/getclients')
+        .then((response) => {
+            Object.values(response.data).forEach((key) => {
+                this.options2.push({ 
+                    name: `${key['name']} ${key['lastname']}`,
+                    client: `${key['name']}`, 
+                    client_lastname: `${key['lastname']}`, 
+                    rutClient: `${key['rut']}`, 
+                    rutcompany: `${key['company_rut']}`, 
+                    company: `${key['company']}` 
+            });
             });
         })
         .catch((error) => console.log(error));
@@ -134,7 +165,15 @@ export default {
           let total = this.general.total;
           this.general.total = this.general.total - (this.general.total * this.discount);          
       },
+      putClient(){
+            this.general.client = this.value2.client;
+            this.general.client_lastname = this.value2.client_lastname;
+            this.general.rutclient = this.value2.rutClient;
+            this.general.company = this.value2.company;
+            this.general.rutcompany = this.value2.rutcompany;    
+      },
       saveSale(){
+        this.aproved = true;
         const toast = this.$swal.mixin({
             toast: true,
             position: 'top-end',
@@ -142,62 +181,69 @@ export default {
             timer: 3000
         });
 
-        /*let validates = true;
-
         for (var it in this.general) {
             if (this.general[it] == ''){
-                validates = false;
+                this.aproved = false;
             }
         }
 
-        for (var it in this.value) {
-            if (this.value[it] == ''){
-                validates = false;
-            }
-        }
 
-          if(validates == false ){
-                toast({
-                    type: 'warning',
-                    title: 'Complete TODOS los campos'
-                });
-          } else { */
-              this.general['discount'] = this.discount;
+    //console.log(this.aproved);
+
+        if(this.aproved == true){
+            this.discount = this.discount == '' ? 0 : this.discount;
+            this.general['discount'] = this.discount;
 
             axios.post('/savesale', { items: this.value, detail: this.general })
                 .then((response) => {
 
                     if( response.data == false ){
+                        this.aproved = true;
                         toast({
                             type: 'error',
                             title: 'No hay stock, por favor revise el inventario.'
                         });
                         
                     } else{
-                        this.value = [];
-                        this.discount = '';
+                        delete this.general.discount;
+                        this.value = [],
+                        //this.options = [],
+                        //this.options2 = [],
+                        this.value2 = [],
                         this.general = {
                             payment: 'Efectivo',
                             total: 0,
-                            nameClient: '',
-                            rutClient: ''
-                        };
+                            client: '',
+                            client_lastname: '',
+                            rutclient: '',
+                            company: '',
+                            rutcompany: ''
+                        },
+                        this.discount = '',
+                        this.aproved = true
                         
                         toast({
                             type: 'success',
                             title: 'Compra agregada con éxito'
                         });
+                        //this.created();
                     }   
-                    //console.log(response.data);
-                    
                 })
                 .catch((error) => {
+                    this.aproved = true;
+                    console.log(error);
                     toast({
                         type: 'error',
                         title: 'Algo salió mal. Revise los datos ingresados'
                     });
                 });
-          //}
+        } else {
+            this.aproved = true;
+            toast({
+                type: 'warning',
+                title: 'Complete TODOS los campos'
+            });
+        }
       },
       getPayMode(tipo){
         if(tipo == '1'){

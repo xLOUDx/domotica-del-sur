@@ -64,6 +64,13 @@ export default {
     },
     methods: {
         addStock(){
+            const toast = this.$swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
             this.stock.total = this.stock.enter - (this.stock.outsale);
             axios.post('/addstock', { id: this.id, numbers: this.stock })
                 .then((response) => {
@@ -74,14 +81,24 @@ export default {
                         total: 0
                     }
                     this.fetchData();
+                    toast({
+                        type: 'succes',
+                            title: 'Stock cargado con éxito'
+                        });
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => {
+                    toast({
+                        type: 'error',
+                        title: 'Ocurrió un problema al cargar stock'
+                    });
+                });
         },
         moment(date) {
             moment.locale('es');
             return moment(date);
         },
         fetchData(){
+
             axios.post('/stock', { id: this.id })
                 .then((response) => {
                     this.stocked = response.data;

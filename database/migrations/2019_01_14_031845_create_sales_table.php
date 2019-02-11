@@ -15,14 +15,16 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('payment');
-            $table->text('amount');
-            $table->text('buyorder');
-            $table->text('client');
-            $table->text('rutclient');
-            $table->text('company')->nullable(true);
-            $table->text('rutcompany')->nullable(true);
-            $table->text('discount')->nullable(true);
+            $table->string('payment');
+            $table->string('amount');
+            $table->string('buyorder');
+            $table->string('client');
+            $table->string('client_lastname');
+            $table->string('rutclient');
+            $table->string('seller');
+            $table->string('company')->nullable(true);
+            $table->string('rutcompany')->nullable(true);
+            $table->string('discount')->nullable(true);
             $table->timestamps();
         });
     }

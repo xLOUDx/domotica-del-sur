@@ -11,6 +11,7 @@ use App\Intermediary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductController extends Controller
@@ -115,7 +116,7 @@ class ProductController extends Controller
             
             if(str_contains($exploded4[0], 'jpeg')){ /* ATENTION TO THIS LINE! */
                 $extension4 = 'jpg';
-            } else {
+            } else {$data =
                 $extension4 = 'png';
             }
     
@@ -255,6 +256,8 @@ class ProductController extends Controller
         $sale->amount = $request->detail['total'];
         $sale->buyorder = $buyOrder;
         $sale->client = $request->detail['client'];
+        $sale->client_lastname = $request->detail['client_lastname'];
+        $sale->seller = Auth::user()->name;
         $sale->rutclient = $request->detail['rutclient'];
         $sale->company = $request->detail['company'];
         $sale->rutcompany = $request->detail['rutcompany'];
@@ -303,6 +306,10 @@ class ProductController extends Controller
         //
     }
 
+    public function wea(Request $request){
+        echo Auth::user()->name;
+    }
+
     public function addStock(Request $request){
         $algo = Stock::where('id', $request->id)->orderBy('created_at', 'desc')->first();
 
@@ -311,11 +318,11 @@ class ProductController extends Controller
         $stock->before = $algo->total;
         $stock->enter = $request->numbers['enter'];
         $stock->outsales = $request->numbers['outsale'] ;
-        $stock->total = $algo->total + ($request->numbers['enter'] - $request->numbers['outsale']);
+        $stock->total += $request->numbers['enter'] - $request->numbers['outsale'];
         $stock->save(); 
 
         $prod = Product::find($request->id);
-        $prod->stock = $algo->total + ($request->numbers['enter'] - $request->numbers['outsale']);
+        $prod->stock += $request->numbers['enter'] - $request->numbers['outsale'];
         $prod->save();
         //return $request->numbers['enter'];
     }
@@ -374,8 +381,7 @@ class ProductController extends Controller
         File::delete(public_path('items_img/thumb/'.$post->img3));
         File::delete(public_path('items_img/thumb/'.$post->img4));
 
-        
-
+    
         $post->delete();
 
     }
