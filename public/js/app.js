@@ -69847,7 +69847,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -69902,6 +69902,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -69910,6 +69912,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             type: 'Carrito',
             data: {},
+            status: '0',
             detOpen: false,
             indexProd: true,
             itemNew: false
@@ -69936,9 +69939,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        newItem: function newItem() {
-            this.indexProd = !this.indexProd;
-            this.itemNew = !this.itemNew;
+        newType: function newType(id) {
+            var _this2 = this;
+
+            var type = '';
+
+            if (id == 1) {
+                type = 'DOMO';
+                this.status = 1;
+            } else if (id == 2) {
+                type = 'IP';
+                this.status = 2;
+            } else if (id == 3) {
+                type = 'DVR';
+                this.status = 3;
+            } else {
+                type = '';
+                this.status = 0;
+            }
+
+            axios.post('/getshop', { type: type }).then(function (response) {
+                console.log(response.data);
+                _this2.data = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 });
@@ -69975,18 +70000,62 @@ var render = function() {
               staticClass: "list-group col-xs-12 col-md-12 col-lg-12 col-xl-12"
             },
             [
-              _vm._m(2),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _vm._m(4),
+              _c(
+                "a",
+                {
+                  staticClass: "list-group-item",
+                  class: { active: this.status == 0 ? true : false },
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      _vm.newType(0)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("Todas")])]
+              ),
               _vm._v(" "),
               _c(
                 "a",
                 {
                   staticClass: "list-group-item",
+                  class: { active: this.status == 1 ? true : false },
                   attrs: { href: "#" },
-                  on: { click: _vm.newItem }
+                  on: {
+                    click: function($event) {
+                      _vm.newType(1)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("Domo")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "list-group-item",
+                  class: { active: this.status == 2 ? true : false },
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      _vm.newType(2)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("IP")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "list-group-item",
+                  class: { active: this.status == 3 ? true : false },
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      _vm.newType(3)
+                    }
+                  }
                 },
                 [_c("span", [_vm._v("DVR")])]
               ),
@@ -70006,6 +70075,10 @@ var render = function() {
           "div",
           { staticClass: "row" },
           [
+            this.data.length == 0
+              ? _c("div", [_c("h1", [_vm._v("No hay productos")])])
+              : _vm._e(),
+            _vm._v(" "),
             _c("details-item", {
               directives: [
                 {
@@ -70073,32 +70146,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h3", [_c("strong", [_vm._v(" Categorias ")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "list-group-item active", attrs: { href: "#" } },
-      [_c("span", [_vm._v("Todas")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "list-group-item", attrs: { href: "#" } }, [
-      _c("span", [_vm._v("Domo")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "list-group-item", attrs: { href: "#" } }, [
-      _c("span", [_vm._v("IP")])
-    ])
   }
 ]
 render._withStripped = true
@@ -71115,7 +71162,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -71224,10 +71271,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         axios.get('/items/' + this.id).then(function (response) {
-            _this.item.model = response.data[0].model, _this.item.description = response.data[0].description, _this.item.data_sheet = response.data[0].data_sheet, _this.item.price = response.data[0].price,
-            //this.item.stock = response.data[0].stock,
-            //this.item.internal_code = response.data[0].internal_code,
-            _this.item.type = response.data[0].type, _this.item.img1 = response.data[0].img1, _this.item.img2 = response.data[0].img2, _this.item.img3 = response.data[0].img3, _this.item.img4 = response.data[0].img4;
+            _this.item.model = response.data[0].model;
+            _this.item.description = response.data[0].description;
+            _this.item.data_sheet = response.data[0].data_sheet;
+            _this.item.price = response.data[0].price;
+            _this.item.stock = response.data[0].stock;
+            _this.item.internal_code = response.data[0].internal_code, _this.item.type = response.data[0].type, _this.item.img1 = response.data[0].img1, _this.item.img2 = response.data[0].img2, _this.item.img3 = response.data[0].img3, _this.item.img4 = response.data[0].img4;
         }).catch(function (error) {
             return console.log(error);
         });
@@ -71235,9 +71284,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         updateProduct: function updateProduct() {
+            var toast = this.$swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
             axios.put('/items/' + this.id, this.item).then(function (response) {
-                //console.log(response.data);
+                toast({
+                    type: 'success',
+                    title: 'Producto actualizado con éxito!'
+                });
             }).catch(function (error) {
+                toast({
+                    type: 'error',
+                    title: 'Error inesperado'
+                });
                 console.log(error);
             });
         }

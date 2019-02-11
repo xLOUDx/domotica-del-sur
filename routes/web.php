@@ -24,6 +24,7 @@ Route::get('/getclients', 'ClientController@getClients');
 Route::post('/getclient', 'ClientController@getClient');
 Route::post('/updateclient', 'ClientController@updateClient');
 Route::post('/detailsclient', 'ClientController@detailsClient');
+Route::post('/getshop', 'ProductController@getShop');
 
 
 

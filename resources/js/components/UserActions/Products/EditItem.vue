@@ -95,12 +95,12 @@ export default {
     created(){        
         axios.get(`/items/${this.id}`)
             .then((response) => {                
-                this.item.model = response.data[0].model,
-                this.item.description = response.data[0].description,
-                this.item.data_sheet = response.data[0].data_sheet,
-                this.item.price = response.data[0].price,
-                //this.item.stock = response.data[0].stock,
-                //this.item.internal_code = response.data[0].internal_code,
+                this.item.model = response.data[0].model;
+                this.item.description = response.data[0].description;
+                this.item.data_sheet = response.data[0].data_sheet;
+                this.item.price = response.data[0].price;
+                this.item.stock = response.data[0].stock;
+                this.item.internal_code = response.data[0].internal_code,
                 this.item.type = response.data[0].type,
                 this.item.img1 = response.data[0].img1,
                 this.item.img2 = response.data[0].img2,
@@ -111,12 +111,25 @@ export default {
             .catch((error) => console.log(error))
     },
     methods: {
-        updateProduct(){            
+        updateProduct(){   
+            const toast = this.$swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });        
             axios.put(`/items/${this.id}`, this.item)
                 .then((response) => {
-                    //console.log(response.data);
+                    toast({
+                        type: 'success',
+                        title: 'Producto actualizado con éxito!'
+                    });
                 })
                 .catch((error) => {
+                    toast({
+                        type: 'error',
+                        title: 'Error inesperado'
+                    });
                     console.log(error);
                 });
         }

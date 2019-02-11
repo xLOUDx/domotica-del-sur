@@ -12,10 +12,10 @@
             </div> <br> <br>
         <h3> <strong> Categorias </strong> </h3> 
             <div class="list-group col-xs-12 col-md-12 col-lg-12 col-xl-12">
-                <a href="#" class="list-group-item active"> <span>Todas</span></a>
-                <a href="#" class="list-group-item"> <span>Domo</span></a>
-                <a href="#" class="list-group-item"> <span>IP</span></a>
-                <a href="#" class="list-group-item" @click="newItem"> <span>DVR</span></a>
+                <a href="#" @click="newType(0)" :class="{ active: this.status == 0 ? true : false }" class="list-group-item"> <span>Todas</span></a>
+                <a href="#" @click="newType(1)" :class="{ active: this.status == 1 ? true : false }" class="list-group-item"> <span>Domo</span></a>
+                <a href="#" @click="newType(2)" :class="{ active: this.status == 2 ? true : false }" class="list-group-item"> <span>IP</span></a>
+                <a href="#" @click="newType(3)" :class="{ active: this.status == 3 ? true : false }" class="list-group-item"> <span>DVR</span></a>
                 <!--Cart Modal start -->
                 <cart-shop class="alert alert-success" :type="type"> </cart-shop>                 
                 <!--Cart Modal end -->
@@ -26,7 +26,9 @@
         <!-- Shop items start -->
         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10">
             <div class="row">
-
+                <div v-if="this.data.length == 0">
+                    <h1>No hay productos</h1>
+                </div>
                 <details-item v-show="detOpen"> </details-item>
                 <div v-for="prod in data" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                     <!-- PROD es el detalle que se envia a la cajita -->
@@ -50,12 +52,12 @@ export default {
             type: 'Carrito',
             data: {
             },
+            status: '0',
             detOpen: false,
             indexProd: true,
             itemNew: false
         }
     },
-
     created(){
         axios.get('/items')
             .then((response) => {
@@ -75,9 +77,31 @@ export default {
 
     },
     methods:{
-        newItem(){
-            this.indexProd = !this.indexProd;
-            this.itemNew = !this.itemNew;
+        newType(id){
+            let type = '';
+
+            if(id == 1){
+                type = 'DOMO';
+                this.status = 1;
+            }
+            else if(id == 2){
+                type = 'IP';
+                this.status = 2;
+            }
+            else if(id == 3){
+                type = 'DVR';
+                this.status = 3;
+            } else {
+                type = '';
+                this.status = 0;
+            }
+
+            axios.post('/getshop', { type: type })
+                .then((response) => { 
+                    console.log(response.data);
+                    this.data = response.data;
+                 })
+                .catch((error) => { console.log(error) });
         }
     }
 }

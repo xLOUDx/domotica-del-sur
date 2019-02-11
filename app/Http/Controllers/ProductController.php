@@ -27,6 +27,12 @@ class ProductController extends Controller
         return $products;
     }
 
+    public function getShop(Request $request){
+        $products = Product::where('type', 'like', "%{$request->type}%")->get();
+        //$user = User::where('name','LIKE',"%{$search}%")
+        return $products;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
