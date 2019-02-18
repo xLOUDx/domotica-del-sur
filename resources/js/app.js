@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueGoodTable from 'vue-good-table';
+import 'vue-good-table/dist/vue-good-table.css';
 
+Vue.use(VueGoodTable);
 Vue.use(VueSweetalert2);
 Vue.use(VueRouter)
 
@@ -26,7 +29,7 @@ import EditItem from './components/UserActions/Products/EditItem.vue';
 import NewClient from './components/UserActions/Clients/NewClient.vue';
 import Transactions from './components/UserActions/Sales/Transactions.vue';
 import NewSale from './components/UserActions/Sales/NewSale.vue';
-import Sales from './components/UserActions/Sales/Sales.vue';
+import Sales from './components/UserActions/Sales/Sales.vue'; //esteeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 import SalesDetail from './components/UserActions/Sales/SalesDetail.vue';
 import ControlStock from './components/UserActions/Products/ControlStock.vue';
 import StockDetail from './components/UserActions/Products/StockDetail.vue';
@@ -46,7 +49,7 @@ const routes = [
     { name: 'SalesDetail', path: '/user/sales/:id', component: SalesDetail, props: true  },
     { name: 'NewClient', path: '/user/new/client', component: NewClient },
     { name: 'NewSale', path: '/user/new/sale', component: NewSale },
-    { name: 'Sales', path: '/user/sales/:type', component: Sales, props: true },
+    { name: 'Sales', path: '/user/sales', component: Sales },
     { name: 'StockDetail', path: '/user/product/detail/:id', component: StockDetail, props: true },
     { name: 'ControlStock', path: '/user/stock', component: ControlStock },
     { name: 'EditClient', path: '/user/edit/:id', component: EditClient, props: true },

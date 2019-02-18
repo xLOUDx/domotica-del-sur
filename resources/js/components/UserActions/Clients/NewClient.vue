@@ -105,7 +105,6 @@ export default {
                    this.validated = false;
                 }
             }
-            console.log(this.validated);
 
             if(this.validated == true){
                 
@@ -117,7 +116,6 @@ export default {
                         this.status = "Guardar"
                         this.validated = true;
                         this.disb = false;
-                        console.log(response.data);
                         toast({
                             type: 'success',
                             title: 'Agregado correctamente'

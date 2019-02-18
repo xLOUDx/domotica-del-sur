@@ -1,73 +1,29 @@
 <template>
     <div class="container-fluid">
 
-        <table v-if="this.tipo == 'transaction'" class="table table-hover table-responsive-sm">
-        <thead>
-            <tr>
-                <th class="table-primary" scope="col">ID</th>
-                <th class="table-primary" scope="col">Metodo de pago</th>
-                <th class="table-primary" scope="col">Orden de compra</th>
-                <th class="table-primary" scope="col">Monto</th>
-                <th class="table-primary" scope="col">Fecha</th>
-                <th class="table-primary" scope="col">Detalles</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="sal in sales">
-                <th>{{ sal.id }}</th>
-                <td>{{ sal.payment }}</td>
-                <td>{{ sal.buyorder }}</td>
-                <td>{{ sal.ammount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
-                <td>{{ sal.created_at }}</td>
-                <td> <button class="btn btn-link" @click="getDetails(sal.id, sal.ammount)">Ver detales</button> </td>
-            </tr>
-        </tbody>
-        </table>
+    <!-- TABLA --> 
+    <div>
+        <vue-good-table
+        :columns="columns"
+        :rows="rows"
+        :pagination-options="{
+            enabled: true,
+            perPage: 5,
+            nextLabel: 'Siguente',
+            prevLabel: 'Anterior',
+            rowsPerPageLabel: 'Registros por página',
+            ofLabel: 'De',
+            allLabel: 'Todo',
+            pageLabel: 'Página'
+        }"
+        @on-cell-click="onCellClick">
 
-        <table v-if="this.tipo == 'sale'" class="table table-hover table-responsive-sm">
-        <thead>
-            <tr>
-                <th class="table-primary" scope="col">Vendedor</th>
-                <th class="table-primary" scope="col">Orden de compra</th>
-                <th class="table-primary" scope="col">Cliente</th>
-                <th class="table-primary" scope="col">Rut de cliente</th>
-                <th class="table-primary" scope="col">Empresa</th>
-                <th class="table-primary" scope="col">Rut empresa</th>
-                <th class="table-primary" scope="col">Modo de pago</th>
-                <th class="table-primary" scope="col">Monto</th>
-                <th class="table-primary" scope="col">Descuento</th>
-                <th class="table-primary" scope="col">Fecha</th>
-                <th class="table-primary" scope="col">Detalles</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td> <input class="form-control" type="text"> </td>
-                <td> <input class="form-control" type="text"> </td>
-                <td> <input class="form-control" type="text"> </td>
-                <td> <input class="form-control" type="text"> </td>
-                <td> <input class="form-control" type="text"> </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td> <input class="form-control" type="text"> </td>
-                <td></td>
-            </tr> 
-            <tr v-for="sal in sales">
-                <th>{{ sal.seller }}</th>
-                <th>{{ sal.buyorder }}</th>
-                <td>{{ sal.client }}</td>
-                <td>{{ sal.rutclient }}</td>
-                <td>{{ sal.company }}</td>
-                <td>{{ sal.rutcompany }}</td>
-                <td>{{ sal.payment }}</td>
-                <td>{{ sal.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
-                <td>{{ sal.discount }}</td>
-                <td>{{ moment(sal.created_at).format('l') }}</td>
-                <td> <button class="btn btn-link" @click="getDetails(sal.id, sal.amount)">Ver detales</button> </td>
-            </tr>
-        </tbody>
-        </table>
+          <div slot="emptystate">
+            No hay datos para mostrar
+        </div>
+        </vue-good-table>
+    </div> 
+    <!-- END -->
 
     </div>        
 </template>
@@ -76,39 +32,134 @@
 import moment from 'moment';
 
 export default {
-    props:['type'],
     data(){
         return{
             sales: {
 
             },
-            tipo: ''
-        }
-    },
-    watch: {
-        '$props':{
-        handler: function (val, oldVal) { 
-            this.getType();
-        },
-        deep: true
+            tipo: '',
+        columns: [
+            {
+                label: 'Vendedor',
+                field: 'seller',
+                filterOptions: {
+                    enabled: true,
+                },
+            },
+            {
+                label: 'Orden de compra',
+                field: 'buyorder',
+                type: 'number',
+                filterOptions: {
+                    enabled: true,
+                },
+                type: 'number'
+            },
+            {
+                label: 'Cliente',
+                field: 'client',
+                filterOptions: {
+                    enabled: true,
+                },
+            },
+            {
+                label: 'Rut de cliente',
+                field: 'rutclient',
+                filterOptions: {
+                    enabled: true,
+                },
+                type: 'percentage',
+                type: 'number'
+            },
+            {
+                label: 'Empresa',
+                field: 'company',
+                filterOptions: {
+                    enabled: true,
+                },
+            },
+            {
+                label: 'Rut empresa',
+                field: 'rutcompany',
+                filterOptions: {
+                    enabled: true,
+                },
+                type: 'number'
+            },
+            {
+                label: 'Modo de pago',
+                field: 'payment',
+                filterOptions: {
+                    enabled: true,
+                },
+            },
+            {
+                label: 'Monto',
+                field: 'amount',
+                filterOptions: {
+                    enabled: true,
+                },
+                type: 'percentage',
+                type: 'number'
+            },
+            {
+                label: 'Descuento',
+                field: 'discount',
+                filterOptions: {
+                    enabled: true,
+                },
+                type: 'percentage',
+            },
+            {
+                label: 'Fecha',
+                field: 'created_at',
+                filterOptions: {
+                    enabled: true,
+                },
+            },
+            {
+                label: 'Detalles',
+                field: 'see',
+                html: true
+            },
+        ],
+        rows: [],
         }
     },
     created(){
-        this.getType();
+        this.getData();
     },
     methods: {
         getDetails(id, monto){
+            monto = monto.replace('.', '');
+            monto = parseInt(monto);
             this.$router.push({ name: 'SalesDetail', params: { id: id, total: monto }});
         },
-        getType(){
-            this.tipo = this.type;
-            this.getData();
+        onCellClick(params){
+            let exp = params.event.toElement.className;
+            let id = params.row.id;
+            let amount = params.row.amount
+            
+            if(exp == 'btn btn-link'){
+                this.getDetails(id, amount);
+            } 
         },
         getData(){
-            axios.post('/sales', { type: this.type })
+            axios.post('/sales', { type: 'sale' })
                 .then((response) => {
                     this.sales = response.data
-                   //console.log( response.data );
+                    let data = [];
+                    response.data.map( x => {
+                        let see = {
+                            see: '<button @click="getDetails(tran.id, tran.ammount)" type="button" class="btn btn-link">Ver detalles...</button>'
+                        };
+
+                        x.amount = x.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+                        x.created_at = moment(x.created_at).format('l');
+                        var obj = Object.assign({}, x, see);
+                        data.push( obj );
+                    });
+                this.rows = data;
                 })
                 .catch((error) => {
                     console.log(error);

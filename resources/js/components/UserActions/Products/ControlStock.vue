@@ -1,28 +1,30 @@
 <template>
     <div class="container">
 
-    <table class="table table-hover">
-    <thead>
-        <tr>
-            <th class="table-primary" scope="col">ID</th>
-            <th class="table-primary" scope="col">Modelo</th>
-            <th class="table-primary" scope="col">Precio</th>
-            <th class="table-primary" scope="col">Stock</th>
-            <th class="table-primary" scope="col">Último movimiento</th>
-            <th class="table-primary" scope="col">Ver</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="pro in products">
-            <th>{{ pro.id }}</th>
-            <td>{{ pro.model }}</td>
-            <td>{{ pro.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
-            <td>{{ pro.stock }}</td>
-            <td>{{ moment(pro.updated_at).format('l') }}</td>
-            <td> <button @click="getDetail(pro.id, pro.model)" class="btn btn-primary">Ver</button> </td>
-        </tr>
-    </tbody>
-    </table>
+
+    <!-- TABLA --> 
+    <div>
+        <vue-good-table
+        :columns="columns"
+        :rows="rows"
+        :pagination-options="{
+            enabled: true,
+            perPage: 5,
+            nextLabel: 'Siguente',
+            prevLabel: 'Anterior',
+            rowsPerPageLabel: 'Registros por página',
+            ofLabel: 'De',
+            allLabel: 'Todo',
+            pageLabel: 'Página'
+        }"
+        @on-cell-click="onCellClick">
+
+          <div slot="emptystate">
+            No hay datos para mostrar
+        </div>
+        </vue-good-table>
+    </div> 
+    <!-- END -->
 
     </div>
 </template>
@@ -37,16 +39,92 @@ export default {
 
             },
             plusStock: 0,
-            lessStock: 0
+            lessStock: 0,
+            columns: [
+                {
+                    label: 'ID',
+                    field: 'id',
+                    filterOptions: {
+                        enabled: true,
+                    },
+                    placeholder: "Filtro por ID",
+                    type: 'number'
+                },
+                {
+                    label: 'Modelo',
+                    field: 'model',
+                    filterOptions: {
+                        enabled: true,
+                    },
+                },
+                {
+                    label: 'Precio',
+                    field: 'price',
+                    filterOptions: {
+                        enabled: true,
+                    },
+                    type: 'number',
+                },
+                {
+                    label: 'Stock',
+                    field: 'stock',
+                    filterOptions: {
+                        enabled: true,
+                    },
+                    type: 'number',                  
+                },
+                {
+                    label: 'Último movimiento',
+                    field: 'created_at',
+                    //dateInputFormat: 'YYYY-MM-DD ',
+                    //dateOutputFormat: '',
+                    filterOptions: {
+                        enabled: true,
+                    },
+                },
+                {
+                    label: 'Ver',
+                    field: 'see',
+                    html: true,
+                },
+                {
+                    
+                }
+            ],
+            rows: [
+
+            ]
         }
     },
     created(){
         this.getData();
     },
     methods: {
+        onCellClick(params){
+            let exp = params.event.toElement.className;
+            let id = params.row.id;
+            
+            if(exp == 'btn btn-primary'){
+                this.getDetail(id);
+            } 
+            
+        },
         getData(){
             axios.get('/items')
-                .then((response) => this.products = response.data)
+                .then((response) => {
+                    let data = [];
+                    response.data.map( x => {
+                        let see = {
+                            see: '<button class="btn btn-primary">Ver</button>'
+                        };
+                        x.price = x.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                        x.created_at = moment(x.created_at).format('l');
+                        //console.log( x.data );
+                        var obj = Object.assign({}, x, see);
+                        data.push( obj );
+                    });
+                    this.rows = data;
+                })
                 .catch((error) => console.log(error));
         },
         addStock(id){

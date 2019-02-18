@@ -42,15 +42,15 @@
                             <tr v-for="prod in items">
                                 <th scope="row">1</th>
                                 <td>{{ prod.model }}</td>
-                                <td>{{ prod.price }}</td>
+                                <td>{{ prod.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
                                 <td>{{ prod.count }}</td>
-                                <td>{{ prod.count * prod.price }}</td>
+                                <td>{{ (prod.count * prod.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
                             </tr>
                         </tbody>
                         </table> <br>
                         
                         <div class="d-flex flex-row-reverse">
-                            <h4>Monto final:  <strong>${{ respuesta.ammount }}</strong> </h4>
+                            <h4>Monto final:  <strong>${{ respuesta.ammount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</strong> </h4>
                         </div>
 
                 </div>

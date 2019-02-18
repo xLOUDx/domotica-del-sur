@@ -79,7 +79,7 @@ class ClientController extends Controller
      */
 
     public function getClients(){
-        $client = User::all()->where('id', '!=', 1);
+        $client = User::where('id', '!=', 1)->get();
         return $client;
     }
 

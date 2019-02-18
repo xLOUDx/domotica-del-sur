@@ -1,7 +1,6 @@
 <template>
     <div class="container">
 
-
     <h1>Historial de inventario: {{ this.model }}</h1> <br>
     <div class="form-row">
         <div class="col">
@@ -22,24 +21,28 @@
         </div>
     </div> <br>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th class="table-primary" scope="col">Fecha</th>
-                <th class="table-primary" scope="col">Ingresos</th>
-                <th class="table-primary" scope="col">Salidas</th>
-                <th class="table-primary" scope="col">Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="stock in stocked">
-                <th scope="row">{{ stock.name }}</th>
-                <td>{{ stock.enter }}</td>
-                <td>{{ stock.outsales }}</td>
-                <td>{{ stock.enter - stock.outsales }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- TABLA --> 
+    <div>
+        <vue-good-table
+        :columns="columns"
+        :rows="rows"
+        :pagination-options="{
+            enabled: true,
+            perPage: 5,
+            nextLabel: 'Siguente',
+            prevLabel: 'Anterior',
+            rowsPerPageLabel: 'Registros por página',
+            ofLabel: 'De',
+            allLabel: 'Todo',
+            pageLabel: 'Página'
+        }">
+          <div slot="emptystate">
+            No hay datos para mostrar
+        </div>
+        </vue-good-table>
+    </div> 
+    <!-- END -->
+
     </div>
 </template>
 
@@ -56,7 +59,33 @@ export default {
             },
             stocked: {
 
-            }
+            },
+            columns: [
+                {
+                    label: 'Fecha',
+                    field: 'name',
+                    filterOptions: { enabled:true },
+                },
+                {
+                    label: 'Ingresos',
+                    field: 'enter',
+                    filterOptions: { enabled:true },
+                    type: 'number'
+                }, 
+                {
+                    label: 'Salidas',
+                    field: 'outsales',
+                    filterOptions: { enabled:true },
+                    type: 'number'
+                },
+                {
+                    label: 'Total',
+                    field: 'total',
+                    filterOptions: { enabled:true },
+                    type: 'number'
+                }
+            ],
+            rows: []
         }
     },
     created(){
@@ -82,7 +111,7 @@ export default {
                     }
                     this.fetchData();
                     toast({
-                        type: 'succes',
+                        type: 'success',
                             title: 'Stock cargado con éxito'
                         });
                 })
@@ -122,9 +151,20 @@ export default {
             this[moment(a.created_at).format('l')].outsales += a.outsales;
             this[moment(a.created_at).format('l')].before += a.before;
         }, Object.create(null));
-        this.stocked = result;
-        //console.log(result);
+        //this.stocked = result;
+        let arreglo = [];
+        result.map(x => {
+            var total = {
+                total: ''
+            }
 
+            total.total = x.enter - x.outsales;
+            var obj = Object.assign({}, x, total);
+            arreglo.push(obj)
+        });
+        this.rows = arreglo;
+        //console.log(arreglo);
+        //console.log(arreglo);
         } 
     }
 }

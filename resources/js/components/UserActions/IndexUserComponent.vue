@@ -36,7 +36,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <router-link to='/user/new/sale' class="dropdown-item">Ingresar venta</router-link>
-                            <button class="dropdown-item btn btn-link" @click="getSales">Historial de ventas</button>
+                            <router-link to="/user/sales" class="dropdown-item">Historial de ventas</router-link>
                             <router-link to="/user/new/transactions" class="dropdown-item">Historial de transacciones</router-link>
                         </div>
                     </li>

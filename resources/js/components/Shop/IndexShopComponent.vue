@@ -98,7 +98,6 @@ export default {
 
             axios.post('/getshop', { type: type })
                 .then((response) => { 
-                    console.log(response.data);
                     this.data = response.data;
                  })
                 .catch((error) => { console.log(error) });

@@ -148,8 +148,9 @@ export default {
                     client: `${key['name']}`, 
                     client_lastname: `${key['lastname']}`, 
                     rutClient: `${key['rut']}`, 
-                    rutcompany: `${key['company_rut']}`, 
-                    company: `${key['company']}` 
+                    discount: `${key['discount']}`, 
+                    company: `${key['company']}` ,
+                    company_rut: `${key['company_rut']}`
             });
             });
         })
@@ -170,7 +171,8 @@ export default {
             this.general.client_lastname = this.value2.client_lastname;
             this.general.rutclient = this.value2.rutClient;
             this.general.company = this.value2.company;
-            this.general.rutcompany = this.value2.rutcompany;    
+            this.general.rutcompany = this.value2.company_rut; 
+            this.discount = this.value2.discount;   
       },
       saveSale(){
         this.aproved = true;
