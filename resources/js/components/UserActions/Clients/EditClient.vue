@@ -47,9 +47,9 @@
                         {{ client.privileges }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" @click="permission(1)">Basico</button>
+                        <button class="dropdown-item" @click="permission(1)">Cliente</button>
                         <button class="dropdown-item" @click="permission(2)">Ventas</button>
-                        <button class="dropdown-item" @click="permission(3)">Total</button>
+                        <button class="dropdown-item" @click="permission(3)">Gerente</button>
                     </div>
                     </div>
                 </div>
@@ -124,7 +124,23 @@ export default {
                         type: 'success',
                         title: 'Actualizado correctamente'
                     });
-                }).catch((error) => console.log(error)); 
+                }).catch((error) => {
+                    toast({
+                        type: 'error',
+                        title: 'No se pudo completar la operación'
+                    });
+                }); 
+        },
+        permission(id){
+            if(id == 1){
+                this.client.privileges = 'Cliente';    
+            } 
+            if(id == 2){
+                this.client.privileges = 'Ventas'
+            }
+            if(id == 3){
+                this.client.privileges = 'Gerente';    
+            }
         }
     }
 }

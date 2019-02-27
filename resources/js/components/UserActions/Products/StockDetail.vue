@@ -100,10 +100,23 @@ export default {
                 timer: 3000
             });
 
+            if(this.stock.enter == ''){
+                this.stock.enter = 0;
+            }
+            if(this.stock.outsale == ''){
+                this.stock.outsale = 0;
+            }
+
             this.stock.total = this.stock.enter - (this.stock.outsale);
             axios.post('/addstock', { id: this.id, numbers: this.stock })
                 .then((response) => {
-                   //console.log(response.data);
+                    console.log(response.data);
+                    if(response.data == false){
+                    toast({
+                        type: 'error',
+                        title: 'No tiene stock'
+                    });
+                    } else {
                     this.stock = {
                         enter: 0,
                         outsale: 0,
@@ -113,7 +126,8 @@ export default {
                     toast({
                         type: 'success',
                             title: 'Stock cargado con éxito'
-                        });
+                    });
+                    }
                 })
                 .catch((error) => {
                     toast({
@@ -144,27 +158,30 @@ export default {
         
         this.stocked.forEach(function (a) {
             if (!this[moment(a.created_at).format('l')]) {
-                this[moment(a.created_at).format('l')] = { name: moment(a.created_at).format('l'), enter: 0, outsales: 0, before: 0 };
+                this[moment(a.created_at).format('l')] = { name: moment(a.created_at).format('l'), enter: 0, outsales: 0, total: 0 };
                 result.push(this[moment(a.created_at).format('l')]);
             }
             this[moment(a.created_at).format('l')].enter += a.enter;
             this[moment(a.created_at).format('l')].outsales += a.outsales;
-            this[moment(a.created_at).format('l')].before += a.before;
+            //this[moment(a.created_at).format('l')].before = a.before;
+            this[moment(a.created_at).format('l')].total = a.total;
+            
         }, Object.create(null));
         //this.stocked = result;
         let arreglo = [];
+        //console.log(result);
         result.map(x => {
             var total = {
                 total: ''
             }
 
-            total.total = x.enter - x.outsales;
+            total.total = x.total;
             var obj = Object.assign({}, x, total);
             arreglo.push(obj)
         });
+        arreglo = arreglo.reverse();
         this.rows = arreglo;
-        //console.log(arreglo);
-        //console.log(arreglo);
+
         } 
     }
 }

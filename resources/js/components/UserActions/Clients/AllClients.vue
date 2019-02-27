@@ -58,31 +58,26 @@ export default {
                     label: 'Rut',
                     field: 'rut',
                     filterOptions: { enabled:true },
-                    type: 'number'
                 },
                 {
                     label: 'Email',
                     field: 'email',
                     filterOptions: { enabled:true },
-                    type: 'number'
                 }, 
                 {
                     label: 'Dirección',
                     field: 'address',
                     filterOptions: { enabled:true },
-                    type: 'number'
                 }, 
                 {
                     label: 'Empresa',
                     field: 'company',
                     filterOptions: { enabled:true },
-                    type: 'number'
                 }, 
                 {
                     label: 'Rut empresa',
                     field: 'company_rut',
                     filterOptions: { enabled:true },
-                    type: 'number'
                 }, 
                 {
                     label: 'Descuento',
@@ -129,8 +124,9 @@ export default {
             
         },
         getClients(){
-            axios.get('/getclients')
+            axios.get('/getclients2')
                 .then((response) => {
+
                     let data = [];                    
                     response.data.map( x => {
                         let details = {
@@ -169,12 +165,15 @@ export default {
             });
             axios.delete(`/clients/${id}`)
                 .then((response) => {
-                    this.clients.splice(this.clients.indexOf(id), 1);
+                    
+                    //this.clients.splice(this.clients.indexOf(id), 1);
+                    
                     toast({
                         type: 'success',
                         title: 'Eliminado correctamente'
                     });
-                this.getClients();
+                    
+                    this.getClients();
 
                 })
                 .catch((error) => {

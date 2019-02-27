@@ -317,25 +317,36 @@ class ProductController extends Controller
     }
 
     public function addStock(Request $request){
-        $algo = Stock::where('id', $request->id)->orderBy('created_at', 'desc')->first();
+        $algo = Product::where('id', $request->id)->get();
+        $previousTotal = $algo[0]->stock;
+        
+        //echo 'stock: '.$algo->total.'traigo'.$request;
+        if($previousTotal >= $request->numbers['outsale']){
+            $newData = $request->numbers['enter'] - $request->numbers['outsale'];
 
-        $stock = new Stock;
-        $stock->id = $request->id;
-        $stock->before = $algo->total;
-        $stock->enter = $request->numbers['enter'];
-        $stock->outsales = $request->numbers['outsale'] ;
-        $stock->total += $request->numbers['enter'] - $request->numbers['outsale'];
-        $stock->save(); 
+            $newTotal = $previousTotal + ($newData);
 
-        $prod = Product::find($request->id);
-        $prod->stock += $request->numbers['enter'] - $request->numbers['outsale'];
-        $prod->save();
-        //return $request->numbers['enter'];
+            $stock = new Stock;
+            $stock->id = $request->id;
+            $stock->before = $previousTotal;
+            $stock->enter = $request->numbers['enter'];
+            $stock->outsales = $request->numbers['outsale'];
+            $stock->total = $newTotal;
+            $stock->save(); 
+
+            $prod = Product::find($request->id);
+            $prod->stock = $newTotal;
+            $prod->save();
+            return 'true';
+
+        } else {
+            return 'false';
+        }
     }
 
     public function getStock(Request $request){
-        return Stock::where('id', $request->id)->orderBy('created_at', 'desc')->get();
-        return $stock;
+        return Stock::where('id', $request->id)->orderBy('created_at', 'asc')->get();
+        //return $stock;
     }
 
     /*public function addStock(Request $request){

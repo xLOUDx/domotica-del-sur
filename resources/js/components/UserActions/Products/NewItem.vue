@@ -162,7 +162,9 @@ export default {
                         this.item.img2 = '';
                         this.item.img3 = '';
                         this.item.img4 = '';
-                    
+                        this.disb = false;
+                        this.validated = true;
+                        this.validates = true;
                     })
                     .catch((error) => { 
                         toast({

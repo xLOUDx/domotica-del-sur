@@ -117,7 +117,12 @@ export default {
                     label: 'Detalles',
                     field: 'details',
                     html: true,
-                }, 
+                },
+                {
+                    label: 'discAmount',
+                    field: 'dicAmount',
+                    hidden: true,
+                }
             ],
             detail: {
                 name: '',
@@ -139,8 +144,8 @@ export default {
         onCellClick(params){
             let exp = params.event.toElement.className;
             let id = params.row.id;
-            let amount = params.row.amount
-            console.log(exp);
+            let amount = params.row.dicAmount;
+            
             if(exp == 'btn btn-link'){
                 this.getDetails(id, amount);
             } 
@@ -159,11 +164,17 @@ export default {
                         let details = {
                             details: '<button class="btn btn-link" @click="getDetails(it.id, it.amount)">Ver detales</button>'         
                         }
-                        this.detail.amount += parseInt(x.amount);
-                        x.amount = x.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+
+                        let dicAmount = {
+                            dicAmount: x.amount
+                        }
+
+                        this.detail.amount += parseInt(x.amount - (x.amount * x.discount) );
+
+                        x.amount = ( x.amount - (x.amount * x.discount)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
                         x.created_at = moment(x.created_at).format('l');
                         
-                        var obj = Object.assign({}, x, details);
+                        var obj = Object.assign({}, x, details, dicAmount);
                         data.push( obj );
                     });
                     this.rows = data;

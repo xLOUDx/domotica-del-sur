@@ -18,6 +18,9 @@ Vue.component('cart-shop', require('./components/Shop/CartShoppingModal.vue'));
 Vue.component('item-detail', require('./components/Shop/ItemDetailComponent.vue'));
 Vue.component('details-item', require('./components/Shop/ItemDetailComponent.vue'));
 Vue.component('user-home', require('./components/UserActions/IndexUserComponent.vue'));
+Vue.component('seller-home', require('./components/UserActions/IndexSellerComponent.vue'));
+Vue.component('client-home', require('./components/UserActions/IndexClientComponent.vue'));
+
 Vue.component('shop-finish', require('./components/Shop/ShopFinish.vue'));
 
 
@@ -36,7 +39,7 @@ import StockDetail from './components/UserActions/Products/StockDetail.vue';
 import AllClients from './components/UserActions/Clients/AllClients.vue';
 import EditClient from './components/UserActions/Clients/EditClient.vue';
 import ShowDataClient from './components/UserActions/Clients/ShowDataClient.vue';
-
+import UpdatePass from './components/UserActions/Clients/UpdatePass.vue';
 
 
 
@@ -47,6 +50,7 @@ const routes = [
     { name: 'AllItems', path: '/user/all/item', component: AllItems },
     { name: 'EditItem', path: '/user/edit/item/:id', component: EditItem, props: true  },
     { name: 'SalesDetail', path: '/user/sales/:id', component: SalesDetail, props: true  },
+    { name: 'UpdatePass', path: '/user/updatepass', component: UpdatePass },
     { name: 'NewClient', path: '/user/new/client', component: NewClient },
     { name: 'NewSale', path: '/user/new/sale', component: NewSale },
     { name: 'Sales', path: '/user/sales', component: Sales },

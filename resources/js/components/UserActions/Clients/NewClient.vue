@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Descuento</h5>
-                    <input placeholder="Ejemplo: 0.50" v-model="client.discount" type="text" class="form-control">
+                    <input placeholder="Ejemplo: 0.50" v-model="client.discount" type="number" class="form-control">
                 </div>
                 <div class="form-group">
                     <h5 for="exampleInputEmail1">Permisos</h5>

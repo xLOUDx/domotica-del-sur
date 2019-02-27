@@ -122,6 +122,11 @@ export default {
                 field: 'see',
                 html: true
             },
+            {
+                label: 'discAmount',
+                field: 'dicAmount',
+                hidden: true,
+            }
         ],
         rows: [],
         }
@@ -131,14 +136,16 @@ export default {
     },
     methods: {
         getDetails(id, monto){
-            monto = monto.replace('.', '');
-            monto = parseInt(monto);
+            //monto = monto.replace('.', '');
+            //monto = parseInt(monto);
             this.$router.push({ name: 'SalesDetail', params: { id: id, total: monto }});
         },
         onCellClick(params){
             let exp = params.event.toElement.className;
             let id = params.row.id;
-            let amount = params.row.amount
+            let amount = params.row.dicAmount;
+            //let discount = params.row.discount;
+            //amount = amount + (amount * discount);
             
             if(exp == 'btn btn-link'){
                 this.getDetails(id, amount);
@@ -154,9 +161,13 @@ export default {
                             see: '<button @click="getDetails(tran.id, tran.ammount)" type="button" class="btn btn-link">Ver detalles...</button>'
                         };
 
-                        x.amount = x.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+                        let dicAmount = {
+                            dicAmount: x.amount
+                        }
+
+                        x.amount = ( x.amount - (x.amount * x.discount)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
                         x.created_at = moment(x.created_at).format('l');
-                        var obj = Object.assign({}, x, see);
+                        var obj = Object.assign({}, x, see, dicAmount);
                         data.push( obj );
                     });
                 this.rows = data;

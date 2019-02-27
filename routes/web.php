@@ -25,8 +25,10 @@ Route::post('/getclient', 'ClientController@getClient');
 Route::post('/updateclient', 'ClientController@updateClient');
 Route::post('/detailsclient', 'ClientController@detailsClient');
 Route::post('/getshop', 'ProductController@getShop');
+Route::post('/updatepass', 'ClientController@updatePass');
 
-
+Route::post('/getseldata', 'ClientController@getselData');
+Route::get('/getclients2', 'ClientController@getClients2');
 
 
 Route::resource('/items', 'ProductController');

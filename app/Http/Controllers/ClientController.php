@@ -10,6 +10,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
+
 
 class ClientController extends Controller
 {
@@ -50,6 +52,18 @@ class ClientController extends Controller
         //
     }
 
+    public function getselData(Request $request){
+        $self = User::where('id', Auth::user()->id)->get();
+        return $self;
+    }
+
+    public function updatePass(Request $request){
+        
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request->pass);
+        $user->save();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -79,8 +93,22 @@ class ClientController extends Controller
      */
 
     public function getClients(){
-        $client = User::where('id', '!=', 1)->get();
+        $client = User::where('privileges', 'Cliente')->get();
         return $client;
+    }
+
+    public function getClients2(){
+        $type = Auth::user()->privileges;
+
+        if($type == 'Gerente'){
+            return User::all();
+        }
+        elseif($type == 'Ventas'){
+            return User::whereNotIn('privileges', ['Gerente', 'Ventas'])->get();
+        } else {
+            return null;
+        }
+        
     }
 
     public function show(Client $client)
